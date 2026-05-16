@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.wingsgraphics.studio',
+  appId: 'com.wingsgraphics.admin',
   appName: 'Wings Graphics',
   webDir: 'dist',
   plugins: {

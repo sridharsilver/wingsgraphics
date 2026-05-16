@@ -1,4 +1,4 @@
-package com.wingsgraphics.studio;
+package com.wingsgraphics.admin;
 
 import com.getcapacitor.BridgeActivity;
 

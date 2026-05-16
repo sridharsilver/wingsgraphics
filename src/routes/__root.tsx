@@ -126,17 +126,21 @@ function RootComponent() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
   const [showSplash, setShowSplash] = useState(true);
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   useEffect(() => {
     // If running as a native app (Android/APK), handle redirects while splash is showing
     if (Capacitor.isNativePlatform() && pathname === "/") {
+      setIsRedirecting(true);
       supabase.auth.getSession().then(({ data: { session } }) => {
         if (session) {
-          navigate({ to: "/admin" });
+          navigate({ to: "/admin" }).then(() => setIsRedirecting(false));
         } else {
-          navigate({ to: "/login" });
+          navigate({ to: "/login" }).then(() => setIsRedirecting(false));
         }
       });
+    } else {
+      setIsRedirecting(false);
     }
   }, [pathname, navigate]);
 
@@ -145,8 +149,10 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
-      <Outlet />
+      {(showSplash || isRedirecting) && <SplashScreen onComplete={() => setShowSplash(false)} />}
+      <div style={{ visibility: (showSplash || isRedirecting) ? 'hidden' : 'visible' }}>
+        <Outlet />
+      </div>
       {!isAdmin && settings.show_chatbot && <ChatBot />}
       {!isAdmin && pathname !== "/contact" && settings.show_enquiry_form && <WhatsAppButton />}
       <Toaster />
