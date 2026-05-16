@@ -49,7 +49,7 @@ function BlogPage() {
   async function fetchPosts() {
     setLoading(true);
     const { data, error } = await supabase
-      .from("blog")
+      .from("wg_blog")
       .select("*")
       .order("created_at", { ascending: false });
     if (data) setPosts(data);
@@ -91,10 +91,10 @@ function BlogPage() {
 
     let error;
     if (editingPost) {
-      const { error: err } = await supabase.from("blog").update(payload).eq("id", editingPost.id);
+      const { error: err } = await supabase.from("wg_blog").update(payload).eq("id", editingPost.id);
       error = err;
     } else {
-      const { error: err } = await supabase.from("blog").insert([payload]);
+      const { error: err } = await supabase.from("wg_blog").insert([payload]);
       error = err;
     }
 
@@ -107,7 +107,7 @@ function BlogPage() {
 
   async function handleDelete(id: string) {
     if (!confirm("Delete post?")) return;
-    await supabase.from("blog").delete().eq("id", id);
+    await supabase.from("wg_blog").delete().eq("id", id);
     fetchPosts();
   }
 

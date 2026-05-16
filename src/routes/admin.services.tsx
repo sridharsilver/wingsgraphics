@@ -48,7 +48,7 @@ function ServicesPage() {
   async function fetchServices() {
     setLoading(true);
     const { data, error } = await supabase
-      .from("services")
+      .from("wg_services")
       .select("*")
       .order("created_at", { ascending: false });
     if (data) setServices(data);
@@ -73,10 +73,10 @@ function ServicesPage() {
 
     let error;
     if (editingService) {
-      const { error: err } = await supabase.from("services").update(payload).eq("id", editingService.id);
+      const { error: err } = await supabase.from("wg_services").update(payload).eq("id", editingService.id);
       error = err;
     } else {
-      const { error: err } = await supabase.from("services").insert([payload]);
+      const { error: err } = await supabase.from("wg_services").insert([payload]);
       error = err;
     }
 
@@ -89,7 +89,7 @@ function ServicesPage() {
 
   async function handleDelete(id: string) {
     if (!confirm("Delete service?")) return;
-    await supabase.from("services").delete().eq("id", id);
+    await supabase.from("wg_services").delete().eq("id", id);
     fetchServices();
   }
 

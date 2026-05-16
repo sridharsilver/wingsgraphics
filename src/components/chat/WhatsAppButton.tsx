@@ -28,7 +28,7 @@ export const WhatsAppButton: React.FC = () => {
 
   const rawPhoneNumber = settings.whatsapp_number || "919951979988";
   const phoneNumber = formatWhatsAppNumber(rawPhoneNumber);
-  const message = encodeURIComponent(settings.whatsapp_message || "Hi Wings Design Studio! I'm interested in your services.");
+  const message = encodeURIComponent(settings.whatsapp_message || "Hi Wings Graphics! I'm interested in your services.");
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
   return (

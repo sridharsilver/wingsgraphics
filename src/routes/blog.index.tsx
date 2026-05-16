@@ -11,10 +11,10 @@ export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
       { title: "Insights & Blog — Design, Print & Brand Strategy Tips" },
-      { name: "description", content: "Expert insights on premium printing techniques, branding strategies, packaging trends, and modern web design from the Wings Design Studio team." },
-      { property: "og:title", content: "Wings Design Studio Insights — The Blog" },
+      { name: "description", content: "Expert insights on premium printing techniques, branding strategies, packaging trends, and modern web design from the Wings Graphics team." },
+      { property: "og:title", content: "Wings Graphics Insights — The Blog" },
       { property: "og:description", content: "Tips, trends, and creative ideas from our studio to help elevate your brand." },
-      { name: "twitter:title", content: "Wings Design Studio Blog" },
+      { name: "twitter:title", content: "Wings Graphics Blog" },
       { name: "twitter:description", content: "Expert insights on printing, branding, and web design." },
     ],
   }),
@@ -28,7 +28,7 @@ function BlogPage() {
   useEffect(() => {
     async function load() {
       const { data } = await supabase
-        .from("blog")
+        .from("wg_blog")
         .select("*")
         .order("created_at", { ascending: false });
       if (data) setPosts(data);
@@ -41,7 +41,7 @@ function BlogPage() {
     <SiteLayout>
       <PageHero 
         eyebrow="Insights"
-        title="The Wings Design Studio blog"
+        title="The Wings Graphics blog"
         desc="Tips, trends and ideas on print, brand and web design."
       />
       <Section>

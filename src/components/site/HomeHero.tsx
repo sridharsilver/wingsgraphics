@@ -51,7 +51,7 @@ export function HomeHero() {
   }, [activeSlides]);
 
   return (
-    <section className="relative overflow-hidden min-h-screen flex items-center pt-20">
+    <section className="relative overflow-hidden min-h-screen flex items-center pt-0">
       {/* Background Image Slider */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
@@ -72,8 +72,8 @@ export function HomeHero() {
         
         {/* Protective Overlays */}
         <div className="absolute inset-0 bg-black/80 backdrop-blur-[2px]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-brand/30 via-transparent to-brand-purple/30 opacity-50" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/90" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-transparent to-transparent opacity-50" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 text-center">
@@ -94,7 +94,7 @@ export function HomeHero() {
           </h1>
 
           <p className="mt-8 text-white/80 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-medium">
-            Wings Design Studio blends elite print craft with strategic digital design to elevate ambitious brands into industry leaders.
+            Wings Graphics blends elite print craft with strategic digital design to elevate ambitious brands into industry leaders.
           </p>
 
           <div className="mt-12 flex flex-wrap gap-5 justify-center">

@@ -20,6 +20,7 @@ const NAV_GROUPS = [
       { to: "/admin/forms", label: "Form Builder", icon: Globe, permission: "enquiries" },
       { to: "/admin/team", label: "Team", icon: Users, permission: "team" },
       { to: "/admin/testimonials", label: "Testimonials", icon: Star, permission: "testimonials" },
+      { to: "/admin/clients", label: "Clients", icon: Globe, permission: "settings" },
     ]
   },
   {
@@ -196,7 +197,7 @@ export function AdminShell() {
       .channel('public:enquiries_global')
       .on(
         'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'enquiries' },
+        { event: 'INSERT', schema: 'public', table: "wg_enquiries" },
         (payload) => {
           console.log("Global new enquiry:", payload);
           LocalNotifications.schedule({
@@ -217,7 +218,7 @@ export function AdminShell() {
       )
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'enquiries' },
+        { event: '*', schema: 'public', table: "wg_enquiries" },
         () => fetchNewEnquiries()
       )
       .subscribe();
@@ -229,7 +230,7 @@ export function AdminShell() {
 
   async function fetchNewEnquiries() {
     const { data, count, error } = await supabase
-      .from('enquiries')
+      .from("wg_enquiries")
       .select('*', { count: 'exact' })
       .eq('status', 'new')
       .order('created_at', { ascending: false })

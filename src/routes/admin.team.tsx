@@ -72,7 +72,7 @@ function TeamManagementPage() {
   async function fetchTeam() {
     setLoading(true);
     const { data, error } = await supabase
-      .from("team")
+      .from("wg_team")
       .select("*")
       .order("order_index", { ascending: true });
     
@@ -120,7 +120,7 @@ function TeamManagementPage() {
     try {
       if (editingMember) {
         const { error } = await supabase
-          .from("team")
+          .from("wg_team")
           .update({
             name: formData.name,
             role: formData.role,
@@ -134,7 +134,7 @@ function TeamManagementPage() {
         toast.success("Member updated");
       } else {
         const { error } = await supabase
-          .from("team")
+          .from("wg_team")
           .insert([{
             name: formData.name,
             role: formData.role,
@@ -161,7 +161,7 @@ function TeamManagementPage() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to remove this team member?")) return;
     
-    const { error } = await supabase.from("team").delete().eq("id", id);
+    const { error } = await supabase.from("wg_team").delete().eq("id", id);
     if (error) toast.error(error.message);
     else {
       toast.success("Member removed");

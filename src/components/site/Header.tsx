@@ -72,11 +72,11 @@ export function Header() {
           aria-hidden="true"
         />
       )}
-      <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled ? "py-2" : "py-4"}`}>
+      <header className={`fixed top-0 inset-x-0 z-50 pointer-events-none transition-all duration-300 ${scrolled ? "py-2" : "py-4"}`}>
       <div className={`mx-auto max-w-7xl container-px`}>
-        <nav className={`flex items-center justify-between rounded-2xl px-4 md:px-6 py-3 transition-all duration-300 ${scrolled || open ? "glass shadow-elegant" : ""}`}>
+        <nav className={`pointer-events-auto flex items-center justify-between rounded-2xl px-4 md:px-6 py-3 transition-all duration-300 ${scrolled || open ? "glass shadow-elegant" : ""}`}>
           <Link to="/" className="flex items-center gap-2">
-            <Logo className="h-12 md:h-11" />
+            <Logo className="h-9 md:h-8" />
           </Link>
           <ul className="hidden lg:flex items-center gap-1">
             {visibleNav.map((n) => {

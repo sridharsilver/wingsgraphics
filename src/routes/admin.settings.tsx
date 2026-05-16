@@ -253,7 +253,7 @@ function AdminSettingsPage() {
     show_enquiry_form: true,
     show_contact_map: true,
     whatsapp_number: '919951979988',
-    whatsapp_message: "Hi Wings Design Studio! I'm interested in your services.",
+    whatsapp_message: "Hi Wings Graphics! I'm interested in your services.",
     studio_address: 'SRT 12, Sanath Nagar, Hyderabad, TS 500018',
     contact_phone: '+91 9951979988',
     contact_email: 'hello@wingsgraphics.in',

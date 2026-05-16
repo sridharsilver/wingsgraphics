@@ -27,7 +27,7 @@ export const ChatBot: React.FC = () => {
     {
       id: "1",
       role: "assistant",
-      content: "Welcome to **Wings Design Studio**. I'm your AI concierge. How can I elevate your brand today?",
+      content: "Welcome to **Wings Graphics**. I'm your AI concierge. How can I elevate your brand today?",
       timestamp: new Date(),
     },
   ]);

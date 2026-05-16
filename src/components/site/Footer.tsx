@@ -33,7 +33,7 @@ export function Footer() {
             <Logo className="h-11" />
           </Link>
           <p className="text-sm text-muted-foreground max-w-sm">
-            From print to pixel — Wings Design Studio crafts premium printing, branding and digital experiences for ambitious brands.
+            From print to pixel — Wings Graphics crafts premium printing, branding and digital experiences for ambitious brands.
           </p>
           <div className="flex gap-3 mt-5">
             <a href={settings.social_instagram} target="_blank" rel="noopener noreferrer" className="size-9 grid place-items-center rounded-full glass hover:bg-gradient-brand transition" aria-label="instagram"><Instagram size={16} /></a>
@@ -74,7 +74,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-border py-5 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Wings Design Studio. All rights reserved.
+        © {new Date().getFullYear()} Wings Graphics. All rights reserved.
       </div>
     </footer>
   );

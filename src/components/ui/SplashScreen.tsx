@@ -65,7 +65,7 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
           </div>
 
           <div className="absolute bottom-10 text-[10px] text-muted-foreground/30 font-medium tracking-widest uppercase">
-            Wings Design Studio — 2026
+            Wings Graphics — 2026
           </div>
         </motion.div>
       )}

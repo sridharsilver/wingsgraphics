@@ -13,10 +13,10 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact Us — Get a Quote for Print, Brand or Web Projects" },
-      { name: "description", content: "Ready to start your next project? Reach out to Wings Design Studio for expert advice and premium solutions in printing, branding, and web design." },
-      { property: "og:title", content: "Start Your Project with Wings Design Studio" },
+      { name: "description", content: "Ready to start your next project? Reach out to Wings Graphics for expert advice and premium solutions in printing, branding, and web design." },
+      { property: "og:title", content: "Start Your Project with Wings Graphics" },
       { property: "og:description", content: "Tell us about your brand vision. We'll respond with a custom estimate within 24 hours." },
-      { name: "twitter:title", content: "Contact Wings Design Studio" },
+      { name: "twitter:title", content: "Contact Wings Graphics" },
       { name: "twitter:description", content: "Get in touch for expert printing and design solutions." },
     ],
   }),
@@ -47,7 +47,7 @@ function ContactPage() {
   useEffect(() => {
     async function fetchServices() {
       const { data, error } = await supabase
-        .from("services")
+        .from("wg_services")
         .select("title")
         .eq("status", "live")
         .order("title");
@@ -86,13 +86,13 @@ function ContactPage() {
     setShowChoice(false);
 
     try {
-      const { error } = await supabase.from("enquiries").insert([formData]);
+      const { error } = await supabase.from("wg_enquiries").insert([formData]);
       if (error) throw error;
 
       if (method === 'whatsapp') {
         const rawWaNumber = settings.whatsapp_number || "919951979988";
         const waNumber = formatWhatsAppNumber(rawWaNumber);
-        const defaultMsg = settings.whatsapp_message || "Hi Wings Design Studio! I'm interested in your services.";
+        const defaultMsg = settings.whatsapp_message || "Hi Wings Graphics! I'm interested in your services.";
         const waMessage = `${defaultMsg}\n\nMy name is ${formData.name}. I'm interested in ${formData.subject || 'your services'}.\n\nMessage: ${formData.message}`;
         const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
         window.open(waUrl, "_blank");

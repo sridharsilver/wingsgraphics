@@ -22,11 +22,11 @@ function Dashboard() {
       const thirtyDaysAgo = subDays(new Date(), 29);
       
       const [enq, port, blg, rec, graphRes] = await Promise.all([
-        supabase.from("enquiries").select("id", { count: "exact", head: true }),
-        supabase.from("portfolio").select("id", { count: "exact", head: true }),
-        supabase.from("blog").select("id", { count: "exact", head: true }),
-        supabase.from("enquiries").select("*").order("created_at", { ascending: false }).limit(5),
-        supabase.from("enquiries")
+        supabase.from("wg_enquiries").select("id", { count: "exact", head: true }),
+        supabase.from("wg_portfolio").select("id", { count: "exact", head: true }),
+        supabase.from("wg_blog").select("id", { count: "exact", head: true }),
+        supabase.from("wg_enquiries").select("*").order("created_at", { ascending: false }).limit(5),
+        supabase.from("wg_enquiries")
           .select("created_at")
           .gte("created_at", startOfDay(thirtyDaysAgo).toISOString())
       ]);

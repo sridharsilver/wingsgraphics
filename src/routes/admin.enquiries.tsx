@@ -69,7 +69,7 @@ function EnquiriesPage() {
       .channel('public:enquiries_list')
       .on(
         'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'enquiries' },
+        { event: 'INSERT', schema: 'public', table: "wg_enquiries" },
         (payload) => {
           console.log("New enquiry received:", payload);
           
@@ -92,12 +92,12 @@ function EnquiriesPage() {
       )
       .on(
         'postgres_changes',
-        { event: 'UPDATE', schema: 'public', table: 'enquiries' },
+        { event: 'UPDATE', schema: 'public', table: "wg_enquiries" },
         () => fetchEnquiries()
       )
       .on(
         'postgres_changes',
-        { event: 'DELETE', schema: 'public', table: 'enquiries' },
+        { event: 'DELETE', schema: 'public', table: "wg_enquiries" },
         () => fetchEnquiries()
       )
       .subscribe();
@@ -110,7 +110,7 @@ function EnquiriesPage() {
   async function fetchEnquiries() {
     setLoading(true);
     const { data, error } = await supabase
-      .from("enquiries")
+      .from("wg_enquiries")
       .select("*")
       .order("created_at", { ascending: false });
     if (data) setEnquiries(data);
@@ -119,7 +119,7 @@ function EnquiriesPage() {
 
   async function handleDelete() {
     if (!deletingId) return;
-    const { error } = await supabase.from("enquiries").delete().eq("id", deletingId);
+    const { error } = await supabase.from("wg_enquiries").delete().eq("id", deletingId);
     if (error) {
       toast.error(`Failed to delete: ${error.message}`);
     } else {
@@ -130,7 +130,7 @@ function EnquiriesPage() {
 
   async function handleToggleStatus(id: string, currentStatus: string) {
     const newStatus = currentStatus === "new" ? "replied" : "new";
-    const { error } = await supabase.from("enquiries").update({ status: newStatus }).eq("id", id);
+    const { error } = await supabase.from("wg_enquiries").update({ status: newStatus }).eq("id", id);
     if (error) {
       toast.error(`Failed to update status: ${error.message}`);
     } else {
@@ -348,7 +348,7 @@ function EnquiriesPage() {
               <div className="flex flex-wrap gap-3 pt-2">
                 {selectedEnquiry.phone && (
                   <a 
-                    href={`https://wa.me/${selectedEnquiry.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hi ${selectedEnquiry.name.split(' ')[0]}, we received your enquiry about "${selectedEnquiry.subject || 'our services'}" at Wings Design Studio...`)}`} 
+                    href={`https://wa.me/${selectedEnquiry.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hi ${selectedEnquiry.name.split(' ')[0]}, we received your enquiry about "${selectedEnquiry.subject || 'our services'}" at Wings Graphics...`)}`} 
                     target="_blank" 
                     rel="noopener"
                     className="flex-1"

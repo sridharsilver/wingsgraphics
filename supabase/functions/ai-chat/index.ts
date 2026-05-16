@@ -17,7 +17,7 @@ serve(async (req) => {
 
     if (!apiKey) return new Response(JSON.stringify({ reply: "API Key missing." }), { headers: corsHeaders })
 
-    const systemPrompt = `You are the AI Concierge for Wings Design Studio. 
+    const systemPrompt = `You are the AI Concierge for Wings Graphics. 
     You are elite, professional, and helpful.
 
     CORE ROUTES:
@@ -32,7 +32,7 @@ serve(async (req) => {
     
     Never just use brackets like [Contact Page]. Always include the path in parentheses like (/contact).
 
-    Context: Wings Design Studio specializes in elite branding, graphic design, web UI/UX, and premium commercial printing.
+    Context: Wings Graphics specializes in elite branding, graphic design, web UI/UX, and premium commercial printing.
     Goal: Guide users to see our work on the portfolio page or start a project on the contact page.
     
     LANGUAGE RULE:

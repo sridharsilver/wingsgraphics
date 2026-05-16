@@ -9,7 +9,7 @@ import { supabase } from "@/lib/supabase";
 export const Route = createFileRoute("/blog/$id")({
   loader: async ({ params }) => {
     const { data, error } = await supabase
-      .from("blog")
+      .from("wg_blog")
       .select("*")
       .eq("id", params.id)
       .single();
@@ -18,12 +18,12 @@ export const Route = createFileRoute("/blog/$id")({
     return data;
   },
   head: ({ loaderData }) => {
-    if (!loaderData) return { title: "Article Not Found — Wings Design Studio" };
+    if (!loaderData) return { title: "Article Not Found — Wings Graphics" };
     
     return {
       meta: [
-        { title: `${loaderData.title} — Wings Design Studio` },
-        { name: "description", content: loaderData.excerpt || "Read the latest insight from Wings Design Studio." },
+        { title: `${loaderData.title} — Wings Graphics` },
+        { name: "description", content: loaderData.excerpt || "Read the latest insight from Wings Graphics." },
         { property: "og:title", content: loaderData.title },
         { property: "og:description", content: loaderData.excerpt },
         { property: "og:image", content: loaderData.image_url },
@@ -59,7 +59,7 @@ function SingleBlogPost() {
     async function loadRelated() {
       if (post) {
         const { data: relData } = await supabase
-          .from("blog")
+          .from("wg_blog")
           .select("*")
           .eq("category", post.category)
           .neq("id", id)

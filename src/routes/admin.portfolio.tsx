@@ -52,7 +52,7 @@ function PortfolioPage() {
   async function fetchProjects() {
     setLoading(true);
     const { data, error } = await supabase
-      .from("portfolio")
+      .from("wg_portfolio")
       .select("*")
       .order("created_at", { ascending: false });
     
@@ -122,13 +122,13 @@ function PortfolioPage() {
     let error;
     if (editingProject) {
       const { error: err } = await supabase
-        .from("portfolio")
+        .from("wg_portfolio")
         .update(payload)
         .eq("id", editingProject.id);
       error = err;
     } else {
       const { error: err } = await supabase
-        .from("portfolio")
+        .from("wg_portfolio")
         .insert([payload]);
       error = err;
     }
@@ -144,7 +144,7 @@ function PortfolioPage() {
 
   async function handleDelete(id: string) {
     if (!confirm("Are you sure?")) return;
-    const { error } = await supabase.from("portfolio").delete().eq("id", id);
+    const { error } = await supabase.from("wg_portfolio").delete().eq("id", id);
     if (error) {
       toast.error("Delete failed");
     } else {

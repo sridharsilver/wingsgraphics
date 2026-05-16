@@ -50,7 +50,7 @@ function TestimonialsPage() {
   async function fetchTestimonials() {
     setLoading(true);
     const { data, error } = await supabase
-      .from("testimonials")
+      .from("wg_testimonials")
       .select("*")
       .order("created_at", { ascending: false });
     if (data) setTestimonials(data);
@@ -70,10 +70,10 @@ function TestimonialsPage() {
 
     let error;
     if (editingTestimonial) {
-      const { error: err } = await supabase.from("testimonials").update(payload).eq("id", editingTestimonial.id);
+      const { error: err } = await supabase.from("wg_testimonials").update(payload).eq("id", editingTestimonial.id);
       error = err;
     } else {
-      const { error: err } = await supabase.from("testimonials").insert([payload]);
+      const { error: err } = await supabase.from("wg_testimonials").insert([payload]);
       error = err;
     }
 
@@ -86,7 +86,7 @@ function TestimonialsPage() {
 
   async function handleDelete(id: string) {
     if (!confirm("Delete testimonial?")) return;
-    await supabase.from("testimonials").delete().eq("id", id);
+    await supabase.from("wg_testimonials").delete().eq("id", id);
     fetchTestimonials();
   }
 

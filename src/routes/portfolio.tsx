@@ -12,9 +12,9 @@ export const Route = createFileRoute("/portfolio")({
     meta: [
       { title: "Portfolio — Selected Creative Projects & Printing Showcase" },
       { name: "description", content: "Explore our diverse portfolio of premium print design, strategic branding, custom packaging, and modern website development projects." },
-      { property: "og:title", content: "Our Creative Portfolio — Wings Design Studio" },
+      { property: "og:title", content: "Our Creative Portfolio — Wings Graphics" },
       { property: "og:description", content: "A showcase of premium design and print projects crafted for ambitious brands." },
-      { name: "twitter:title", content: "Wings Design Studio Portfolio" },
+      { name: "twitter:title", content: "Wings Graphics Portfolio" },
       { name: "twitter:description", content: "A curated look at our projects across print, brand, and digital." },
     ],
   }),
@@ -32,7 +32,7 @@ function PortfolioPage() {
   useEffect(() => {
     async function load() {
       const { data, error } = await supabase
-        .from("portfolio")
+        .from("wg_portfolio")
         .select("*")
         .order("created_at", { ascending: false });
       if (data) setProjects(data);

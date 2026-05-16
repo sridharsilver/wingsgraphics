@@ -16,9 +16,9 @@ export const Route = createFileRoute("/services")({
     meta: [
       { title: "Our Services — Print, Branding & Digital Solutions" },
       { name: "description", content: "Explore our creative solutions: premium offset printing, brand identity design, and custom website development. A complete studio experience." },
-      { property: "og:title", content: "Premium Design & Printing Services — Wings Design Studio" },
+      { property: "og:title", content: "Premium Design & Printing Services — Wings Graphics" },
       { property: "og:description", content: "Everything your brand needs, from physical print to digital pixels. Quality-focused studio services." },
-      { name: "twitter:title", content: "Creative Services by Wings Design Studio" },
+      { name: "twitter:title", content: "Creative Services by Wings Graphics" },
       { name: "twitter:description", content: "Explore our premium offset printing, branding, and web design solutions." },
     ],
   }),
@@ -32,7 +32,7 @@ function ServicesPage() {
   useEffect(() => {
     async function load() {
       const { data: res } = await supabase
-        .from("services")
+        .from("wg_services")
         .select("*")
         .order("created_at", { ascending: false });
       if (res) setData(res);

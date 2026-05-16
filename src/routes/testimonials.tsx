@@ -10,35 +10,43 @@ import { supabase } from "@/lib/supabase";
 export const Route = createFileRoute("/testimonials")({
   head: () => ({
     meta: [
-      { title: "Testimonials — Wings Design Studio" },
+      { title: "Testimonials — Wings Graphics" },
       { name: "description", content: "Real stories from brands we've helped grow with print, branding and web design." },
-      { property: "og:title", content: "Testimonials — Wings Design Studio" },
+      { property: "og:title", content: "Testimonials — Wings Graphics" },
       { property: "og:description", content: "Hear from our happy clients." },
     ],
   }),
   component: TestimonialsPage,
 });
 
-const logos = ["lumen", "bloomly", "northwave", "skyline"];
-
 function TestimonialsPage() {
   const [data, setData] = useState<any[]>([]);
+  const [clients, setClients] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
+      // Load Testimonials
       const { data: res } = await supabase
-        .from("testimonials")
+        .from("wg_testimonials")
         .select("*")
         .eq("status", "approved")
         .order("created_at", { ascending: false });
       if (res) setData(res);
+
+      // Load Client Logos
+      const { data: clientRes } = await supabase
+        .from("wg_clients")
+        .select("*")
+        .order("created_at", { ascending: true });
+      if (clientRes) setClients(clientRes);
+
       setLoading(false);
     }
     load();
   }, []);
-  const [idx, setIdx] = useState(0);
   
+  const [idx, setIdx] = useState(0);
   const featured = (data || []).slice(0, 3);
   const reviews = (data || []).slice(3);
 
@@ -48,11 +56,10 @@ function TestimonialsPage() {
     return () => clearInterval(t);
   }, [featured.length]);
 
-  if (featured.length === 0 && reviews.length === 0) {
+  if (loading) {
     return (
       <SiteLayout>
-        <PageHero eyebrow="Testimonials" title="Loved by brands" desc="Hear from teams we've helped grow." />
-        <Section><div className="text-center text-muted-foreground">No testimonials yet.</div></Section>
+        <PageHero eyebrow="Testimonials" title="Loading stories..." desc="Please wait while we fetch our latest reviews." />
       </SiteLayout>
     );
   }
@@ -91,8 +98,8 @@ function TestimonialsPage() {
             </div>
             {featured.length > 1 && (
               <>
-                <button onClick={() => setIdx((i) => (i - 1 + featured.length) % featured.length)} className="absolute -left-2 md:-left-12 top-1/2 -translate-y-1/2 size-10 grid place-items-center rounded-full glass" aria-label="Prev"><ChevronLeft size={18} /></button>
-                <button onClick={() => setIdx((i) => (i + 1) % featured.length)} className="absolute -right-2 md:-right-12 top-1/2 -translate-y-1/2 size-10 grid place-items-center rounded-full glass" aria-label="Next"><ChevronRight size={18} /></button>
+                <button onClick={() => setIdx((i) => (i - 1 + featured.length) % featured.length)} className="absolute -left-2 md:-left-12 top-1/2 -translate-y-1/2 size-10 grid place-items-center rounded-full glass shadow-elegant" aria-label="Prev"><ChevronLeft size={18} /></button>
+                <button onClick={() => setIdx((i) => (i + 1) % featured.length)} className="absolute -right-2 md:-right-12 top-1/2 -translate-y-1/2 size-10 grid place-items-center rounded-full glass shadow-elegant" aria-label="Next"><ChevronRight size={18} /></button>
                 <div className="flex justify-center gap-2 mt-5">
                   {featured.map((_, i) => (
                     <button key={i} onClick={() => setIdx(i)} className={`h-1.5 rounded-full transition-all ${i === idx ? "w-8 bg-gradient-brand" : "w-2 bg-white/20"}`} />
@@ -122,16 +129,22 @@ function TestimonialsPage() {
         </Section>
       )}
 
-      <Section>
-        <SectionHeader eyebrow="Trusted by" title="Brands we've worked with" />
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          {logos.map((l) => (
-            <div key={l} className="h-20 rounded-xl glass grid place-items-center text-muted-foreground font-display font-semibold tracking-wider">
-              {l.toUpperCase()}
-            </div>
-          ))}
-        </div>
-      </Section>
+      {clients.length > 0 && (
+        <Section>
+          <SectionHeader eyebrow="Trusted by" title="Brands we've worked with" />
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4">
+            {clients.map((c) => (
+              <div key={c.id} className="h-24 rounded-xl glass shadow-elegant p-4 grid place-items-center hover:scale-105 transition-all">
+                <img 
+                  src={c.logo_url} 
+                  alt={c.name} 
+                  className="max-h-full max-w-full object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all"
+                />
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
     </SiteLayout>
   );
 }

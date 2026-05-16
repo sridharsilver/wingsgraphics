@@ -19,12 +19,12 @@ import { supabase } from "@/lib/supabase";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About Us — The Story of Wings Design Studio" },
-      { name: "description", content: "Learn about the heritage and craft behind Wings Design Studio. 12+ years of expertise in premium printing, graphic design, and brand building." },
-      { property: "og:title", content: "About Wings Design Studio — A Decade of Craft" },
+      { title: "About Us — The Story of Wings Graphics" },
+      { name: "description", content: "Learn about the heritage and craft behind Wings Graphics. 12+ years of expertise in premium printing, graphic design, and brand building." },
+      { property: "og:title", content: "About Wings Graphics — A Decade of Craft" },
       { property: "og:description", content: "A premium printing and design studio dedicated to quality and innovation since 2013." },
       { property: "og:type", content: "profile" },
-      { name: "twitter:title", content: "About Wings Design Studio" },
+      { name: "twitter:title", content: "About Wings Graphics" },
       { name: "twitter:description", content: "12+ years of expertise in premium printing and brand building." },
     ],
   }),
@@ -44,7 +44,7 @@ export function AboutPage() {
   useEffect(() => {
     async function load() {
       const { data } = await supabase
-        .from("team")
+        .from("wg_team")
         .select("*")
         .eq("is_active", true)
         .order("order_index", { ascending: true });
@@ -56,9 +56,9 @@ export function AboutPage() {
   return (
     <SiteLayout>
       <PageHero 
-        eyebrow="About Wings Design Studio"
+        eyebrow="About Wings Graphics"
         title="A studio where ink meets pixel."
-        desc="Founded in 2013, Wings Design Studio began as a small print shop and has grown into a full-service design studio for ambitious brands across India and beyond."
+        desc="Founded in 2013, Wings Graphics began as a small print shop and has grown into a full-service design studio for ambitious brands across India and beyond."
       />
 
 

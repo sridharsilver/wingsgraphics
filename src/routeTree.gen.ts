@@ -32,6 +32,7 @@ import { Route as AdminProfileRouteImport } from './routes/admin.profile'
 import { Route as AdminPortfolioRouteImport } from './routes/admin.portfolio'
 import { Route as AdminFormsRouteImport } from './routes/admin.forms'
 import { Route as AdminEnquiriesRouteImport } from './routes/admin.enquiries'
+import { Route as AdminClientsRouteImport } from './routes/admin.clients'
 import { Route as AdminBlogRouteImport } from './routes/admin.blog'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
@@ -149,6 +150,11 @@ const AdminEnquiriesRoute = AdminEnquiriesRouteImport.update({
   path: '/enquiries',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminClientsRoute = AdminClientsRouteImport.update({
+  id: '/clients',
+  path: '/clients',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminBlogRoute = AdminBlogRouteImport.update({
   id: '/blog',
   path: '/blog',
@@ -166,6 +172,7 @@ export interface FileRoutesByFullPath {
   '/services': typeof ServicesRoute
   '/testimonials': typeof TestimonialsRoute
   '/admin/blog': typeof AdminBlogRoute
+  '/admin/clients': typeof AdminClientsRoute
   '/admin/enquiries': typeof AdminEnquiriesRoute
   '/admin/forms': typeof AdminFormsRoute
   '/admin/portfolio': typeof AdminPortfolioRoute
@@ -190,6 +197,7 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesRoute
   '/testimonials': typeof TestimonialsRoute
   '/admin/blog': typeof AdminBlogRoute
+  '/admin/clients': typeof AdminClientsRoute
   '/admin/enquiries': typeof AdminEnquiriesRoute
   '/admin/forms': typeof AdminFormsRoute
   '/admin/portfolio': typeof AdminPortfolioRoute
@@ -217,6 +225,7 @@ export interface FileRoutesById {
   '/services': typeof ServicesRoute
   '/testimonials': typeof TestimonialsRoute
   '/admin/blog': typeof AdminBlogRoute
+  '/admin/clients': typeof AdminClientsRoute
   '/admin/enquiries': typeof AdminEnquiriesRoute
   '/admin/forms': typeof AdminFormsRoute
   '/admin/portfolio': typeof AdminPortfolioRoute
@@ -245,6 +254,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/testimonials'
     | '/admin/blog'
+    | '/admin/clients'
     | '/admin/enquiries'
     | '/admin/forms'
     | '/admin/portfolio'
@@ -269,6 +279,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/testimonials'
     | '/admin/blog'
+    | '/admin/clients'
     | '/admin/enquiries'
     | '/admin/forms'
     | '/admin/portfolio'
@@ -295,6 +306,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/testimonials'
     | '/admin/blog'
+    | '/admin/clients'
     | '/admin/enquiries'
     | '/admin/forms'
     | '/admin/portfolio'
@@ -487,6 +499,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEnquiriesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/clients': {
+      id: '/admin/clients'
+      path: '/clients'
+      fullPath: '/admin/clients'
+      preLoaderRoute: typeof AdminClientsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/blog': {
       id: '/admin/blog'
       path: '/blog'
@@ -499,6 +518,7 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteChildren {
   AdminBlogRoute: typeof AdminBlogRoute
+  AdminClientsRoute: typeof AdminClientsRoute
   AdminEnquiriesRoute: typeof AdminEnquiriesRoute
   AdminFormsRoute: typeof AdminFormsRoute
   AdminPortfolioRoute: typeof AdminPortfolioRoute
@@ -514,6 +534,7 @@ interface AdminRouteChildren {
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminBlogRoute: AdminBlogRoute,
+  AdminClientsRoute: AdminClientsRoute,
   AdminEnquiriesRoute: AdminEnquiriesRoute,
   AdminFormsRoute: AdminFormsRoute,
   AdminPortfolioRoute: AdminPortfolioRoute,
