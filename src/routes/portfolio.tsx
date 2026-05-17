@@ -40,15 +40,15 @@ function PortfolioPage() {
     }
     load();
   }, []);
-  
+
   // Dynamically derive categories from data
   const categories = ["All", ...Array.from(new Set(projects.map(p => (p.category || "").trim()))).filter(Boolean).sort()];
-  
+
   const list = filter === "All" ? projects : projects.filter((p) => (p.category || "").trim() === filter);
 
   return (
     <SiteLayout>
-      <PageHero 
+      <PageHero
         eyebrow="Portfolio"
         title="Selected work from our studio"
         desc="A curated look at projects across print, brand and digital."
@@ -60,11 +60,10 @@ function PortfolioPage() {
               <button
                 key={c}
                 onClick={() => setFilter(c)}
-                className={`px-4 py-2 text-sm rounded-full transition-all shrink-0 snap-start ${
-                  filter === c 
-                    ? "bg-gradient-brand text-brand-foreground shadow-glow scale-[1.02]" 
+                className={`px-4 py-2 text-sm rounded-full transition-all shrink-0 snap-start ${filter === c
+                    ? "bg-gradient-brand text-brand-foreground shadow-glow scale-[1.02]"
                     : "glass hover:bg-white/10 text-muted-foreground hover:text-white"
-                }`}
+                  }`}
               >
                 {c}
               </button>
@@ -85,10 +84,10 @@ function PortfolioPage() {
                 onClick={() => setOpen(p)}
                 className={`group relative rounded-2xl overflow-hidden glass shadow-elegant text-left ${p.featured ? "row-span-2" : ""}`}
               >
-                <img 
-                  src={p.image_url} 
-                  alt={p.title} 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                <img
+                  src={p.image_url}
+                  alt={p.title}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition" />
                 <div className="absolute bottom-4 left-4 right-4 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-300 text-white">
@@ -112,7 +111,7 @@ function PortfolioPage() {
           >
             <div className="relative w-full max-w-4xl flex items-center justify-center gap-4">
               {/* Previous Button */}
-              <button 
+              <button
                 onClick={(e) => {
                   e.stopPropagation();
                   const idx = list.findIndex(p => p.id === open.id);
@@ -134,16 +133,54 @@ function PortfolioPage() {
               >
                 <div className="relative overflow-hidden bg-black/40 flex items-center justify-center min-h-[300px] max-h-[60vh]">
                   {/* Premium blurred backdrop glow */}
-                  <div 
-                    className="absolute inset-0 bg-cover bg-center blur-2xl opacity-20 scale-110 pointer-events-none" 
+                  <div
+                    className="absolute inset-0 bg-cover bg-center blur-2xl opacity-20 scale-110 pointer-events-none"
                     style={{ backgroundImage: `url(${open.image_url})` }}
                   />
-                  <img 
-                    src={open.image_url} 
-                    alt={open.title} 
+                  <img
+                    src={open.image_url}
+                    alt={open.title}
                     className="object-contain max-h-[60vh] w-full relative z-10"
                   />
                   <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/50 to-transparent pointer-events-none z-20" />
+
+                  {/* Mobile controls overlayed at the bottom of the image */}
+                  <div className="absolute bottom-4 right-4 z-30 flex gap-2 md:hidden">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const idx = list.findIndex(p => p.id === open.id);
+                        const prev = list[idx - 1] || list[list.length - 1];
+                        setOpen(prev);
+                      }}
+                      className="size-9 grid place-items-center rounded-full bg-surface-elevated/80 hover:bg-surface-elevated text-foreground border border-border/40 transition-all active:scale-95 shadow-lg"
+                      aria-label="Previous Project"
+                    >
+                      <ChevronLeft size={16} />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const idx = list.findIndex(p => p.id === open.id);
+                        const next = list[idx + 1] || list[0];
+                        setOpen(next);
+                      }}
+                      className="size-9 grid place-items-center rounded-full bg-surface-elevated/80 hover:bg-surface-elevated text-foreground border border-border/40 transition-all active:scale-95 shadow-lg"
+                      aria-label="Next Project"
+                    >
+                      <ChevronRight size={16} />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setOpen(null);
+                      }}
+                      className="size-9 grid place-items-center rounded-full bg-surface-elevated/80 hover:bg-surface-elevated text-foreground border border-border/40 transition-all active:scale-95 shadow-lg"
+                      aria-label="Close"
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
                 </div>
                 <div className="p-6 md:p-8">
                   <div className="flex items-start justify-between gap-4">
@@ -152,30 +189,9 @@ function PortfolioPage() {
                       <h3 className="mt-1 text-2xl font-bold text-foreground">{open.title}</h3>
                     </div>
                     <div className="flex gap-2">
-                      {/* Mobile Nav Arrows */}
-                      <button 
-                        onClick={() => {
-                          const idx = list.findIndex(p => p.id === open.id);
-                          const prev = list[idx - 1] || list[list.length - 1];
-                          setOpen(prev);
-                        }}
-                        className="md:hidden size-9 grid place-items-center rounded-full bg-surface-elevated/80 hover:bg-surface-elevated text-foreground border border-border/40 transition-all"
-                      >
-                        <ChevronLeft size={16} />
-                      </button>
-                      <button 
-                        onClick={() => {
-                          const idx = list.findIndex(p => p.id === open.id);
-                          const next = list[idx + 1] || list[0];
-                          setOpen(next);
-                        }}
-                        className="md:hidden size-9 grid place-items-center rounded-full bg-surface-elevated/80 hover:bg-surface-elevated text-foreground border border-border/40 transition-all"
-                      >
-                        <ChevronRight size={16} />
-                      </button>
-                      <button 
-                        onClick={() => setOpen(null)} 
-                        className="size-9 grid place-items-center rounded-full bg-surface-elevated/80 hover:bg-surface-elevated text-foreground border border-border/40 transition-all hover:scale-105 active:scale-95" 
+                      <button
+                        onClick={() => setOpen(null)}
+                        className="hidden md:grid size-9 place-items-center rounded-full bg-surface-elevated/80 hover:bg-surface-elevated text-foreground border border-border/40 transition-all hover:scale-105 active:scale-95"
                         aria-label="Close"
                       >
                         <X size={16} />
@@ -191,7 +207,7 @@ function PortfolioPage() {
               </motion.div>
 
               {/* Next Button */}
-              <button 
+              <button
                 onClick={(e) => {
                   e.stopPropagation();
                   const idx = list.findIndex(p => p.id === open.id);
