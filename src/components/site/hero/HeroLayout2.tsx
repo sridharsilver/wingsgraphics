@@ -55,7 +55,7 @@ export function HeroLayout2({ settings }: { settings?: VisibilitySettings }) {
     <section className="relative min-h-screen flex flex-col justify-between overflow-hidden bg-black text-white">
       {/* Background Slideshow */}
       <div className="absolute inset-0 z-0">
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           <motion.div
             key={currentSlide}
             initial={{ opacity: 0, scale: 1.05 }}
