@@ -93,6 +93,23 @@ export function HeroLayout3({ settings }: { settings?: VisibilitySettings }) {
           ))}
         </motion.div>
       </div>
+
+      {/* Animated Scroll Indicator (Centered at Bottom) */}
+      <motion.div 
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: [0.4, 1, 0.4], y: [0, 6, 0] }}
+        transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+        className="absolute bottom-3 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 cursor-pointer z-20 hidden md:flex"
+        onClick={() => window.scrollTo({ top: window.innerHeight, behavior: "smooth" })}
+      >
+        <div className="w-4 h-7 rounded-full border border-foreground/20 flex justify-center pt-1">
+          <motion.div 
+            animate={{ y: [0, 6, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+            className="w-1 h-1 rounded-full bg-foreground/60"
+          />
+        </div>
+      </motion.div>
     </section>
   );
 }
