@@ -93,24 +93,24 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
         {/* Left Column - Content */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left w-full max-w-xl xl:max-w-2xl pt-6 lg:pt-0">
           {/* Eyebrow Pill Badge */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 text-[9px] sm:text-[10px] uppercase tracking-[0.25em] rounded-full border border-white/10 bg-white/5 text-white/90 font-bold mb-8 shadow-sm backdrop-blur-sm">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 text-[9px] sm:text-[10px] uppercase tracking-[0.25em] rounded-full border border-white/10 bg-white/5 text-white/90 font-bold mb-6 shadow-sm backdrop-blur-sm">
             <Sparkles size={11} className="text-white/80 animate-pulse" /> 
             {settings?.layout1_badge || 'PREMIUM STUDIO STANDARD'}
           </div>
 
           {/* Heading */}
           <h1 
-            className="text-[2.5rem] sm:text-5xl md:text-5xl lg:text-[3.25rem] xl:text-[4rem] 2xl:text-[4.75rem] font-black leading-[1.05] tracking-tight text-white pb-6"
+            className="text-[2.5rem] sm:text-5xl md:text-5xl lg:text-[3.25rem] xl:text-[4rem] 2xl:text-[4.75rem] font-black leading-[1.05] tracking-tight text-white mb-6"
             dangerouslySetInnerHTML={{ __html: settings?.layout1_heading || 'Premium<br />branding<br /><span class="bg-gradient-to-r from-[#4A72FF] via-[#7B59FF] to-[#BD43FF] bg-clip-text text-transparent">& print</span>' }}
           />
 
           {/* Subtext */}
-          <p className="text-white/60 text-base sm:text-lg max-w-[480px] mx-auto md:mx-0 leading-relaxed font-medium mb-8">
+          <p className="text-white/60 text-base sm:text-lg max-w-[480px] mx-auto md:mx-0 leading-relaxed font-medium mb-10">
             {settings?.layout1_subtext || 'Wings Graphics blends elite print craft with strategic digital design to elevate ambitious brands into industry leaders.'}
           </p>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center md:justify-start">
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center md:justify-start mb-12 lg:mb-16">
             <Link to={settings?.layout1_button_link || "/contact"} className="w-full sm:w-auto group relative px-8 py-4 rounded-full bg-gradient-to-r from-[#4A72FF] to-[#8C4BFF] hover:from-[#3b63f0] hover:to-[#7c3aeb] text-white font-bold hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 text-sm sm:text-base shadow-lg shadow-blue-500/10">
               {settings?.layout1_button_text || 'Start Your Project'} 
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -121,7 +121,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
           </div>
 
           {/* Stats Bar */}
-          <div className="mt-10 lg:mt-12 xl:mt-16 flex items-center justify-center md:justify-start gap-8 sm:gap-12 w-full">
+          <div className="mt-4 lg:mt-6 flex items-center justify-center md:justify-start gap-8 sm:gap-12 w-full">
             <div className="flex flex-col">
               <span className="text-xl sm:text-2xl lg:text-2xl xl:text-[1.625rem] font-black text-white leading-none tracking-tight">12+</span>
               <span className="text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold mt-1.5">YEARS EXPERIENCE</span>
@@ -144,7 +144,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
         </div>
 
         {/* Right Column - Media Showcase Card (Matches Image perfectly) */}
-        <div className="relative w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[440px] xl:max-w-[480px] aspect-[3/4] rounded-[40px] overflow-hidden mx-auto lg:ml-auto shadow-2xl border border-white/5 group">
+        <div className="relative w-full aspect-[3/4] rounded-[32px] sm:rounded-[40px] overflow-hidden mx-auto lg:ml-auto shadow-2xl border border-white/5 group">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
