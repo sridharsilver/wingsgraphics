@@ -119,7 +119,7 @@ function PortfolioPage() {
                   const prev = list[idx - 1] || list[list.length - 1];
                   setOpen(prev);
                 }}
-                className="hidden md:grid size-12 place-items-center rounded-full glass hover:bg-white/10 transition-all shrink-0"
+                className="hidden md:grid size-12 place-items-center rounded-full bg-surface-elevated/80 hover:bg-surface-elevated text-foreground hover:scale-105 active:scale-95 transition-all shrink-0 border border-border/40"
                 aria-label="Previous Project"
               >
                 <ChevronLeft size={24} />
@@ -130,7 +130,7 @@ function PortfolioPage() {
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.95, y: 20 }}
                 onClick={(e) => e.stopPropagation()}
-                className="w-full max-w-3xl rounded-3xl glass shadow-elegant overflow-hidden max-h-[90vh] overflow-y-auto"
+                className="w-full max-w-3xl rounded-3xl bg-card border border-border dark:bg-transparent dark:glass shadow-elegant overflow-hidden max-h-[90vh] overflow-y-auto"
               >
                 <div className="relative overflow-hidden bg-black/40 flex items-center justify-center min-h-[300px] max-h-[60vh]">
                   {/* Premium blurred backdrop glow */}
@@ -141,16 +141,15 @@ function PortfolioPage() {
                   <img 
                     src={open.image_url} 
                     alt={open.title} 
-                    className="max-h-[60vh] w-auto max-w-full object-contain z-10 relative" 
+                    className="object-contain max-h-[60vh] w-full relative z-10"
                   />
                   <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/50 to-transparent pointer-events-none z-20" />
                 </div>
                 <div className="p-6 md:p-8">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <div className="text-xs uppercase tracking-widest text-brand-purple font-bold">{open.category}</div>
-                      <h3 className="mt-1 text-2xl font-bold">{open.title}</h3>
-                      <div className="text-sm text-muted-foreground mt-1">Project Details</div>
+                      <div className="text-[11px] uppercase tracking-widest text-muted-foreground font-normal">{open.category}</div>
+                      <h3 className="mt-1 text-2xl font-bold text-foreground">{open.title}</h3>
                     </div>
                     <div className="flex gap-2">
                       {/* Mobile Nav Arrows */}
@@ -160,7 +159,7 @@ function PortfolioPage() {
                           const prev = list[idx - 1] || list[list.length - 1];
                           setOpen(prev);
                         }}
-                        className="md:hidden size-9 grid place-items-center rounded-full glass"
+                        className="md:hidden size-9 grid place-items-center rounded-full bg-surface-elevated/80 hover:bg-surface-elevated text-foreground border border-border/40 transition-all"
                       >
                         <ChevronLeft size={16} />
                       </button>
@@ -170,14 +169,24 @@ function PortfolioPage() {
                           const next = list[idx + 1] || list[0];
                           setOpen(next);
                         }}
-                        className="md:hidden size-9 grid place-items-center rounded-full glass"
+                        className="md:hidden size-9 grid place-items-center rounded-full bg-surface-elevated/80 hover:bg-surface-elevated text-foreground border border-border/40 transition-all"
                       >
                         <ChevronRight size={16} />
                       </button>
-                      <button onClick={() => setOpen(null)} className="size-9 grid place-items-center rounded-full glass" aria-label="Close"><X size={16} /></button>
+                      <button 
+                        onClick={() => setOpen(null)} 
+                        className="size-9 grid place-items-center rounded-full bg-surface-elevated/80 hover:bg-surface-elevated text-foreground border border-border/40 transition-all hover:scale-105 active:scale-95" 
+                        aria-label="Close"
+                      >
+                        <X size={16} />
+                      </button>
                     </div>
                   </div>
-                  <p className="mt-4 text-muted-foreground leading-relaxed">{open.description}</p>
+
+                  <div className="mt-5 pt-5 border-t border-border/50">
+                    <h4 className="text-[11px] font-normal uppercase tracking-wider text-muted-foreground">Project Details</h4>
+                    <p className="mt-2 text-[15px] text-foreground/95 leading-relaxed whitespace-pre-wrap">{open.description}</p>
+                  </div>
                 </div>
               </motion.div>
 
@@ -189,7 +198,7 @@ function PortfolioPage() {
                   const next = list[idx + 1] || list[0];
                   setOpen(next);
                 }}
-                className="hidden md:grid size-12 place-items-center rounded-full glass hover:bg-white/10 transition-all shrink-0"
+                className="hidden md:grid size-12 place-items-center rounded-full bg-surface-elevated/80 hover:bg-surface-elevated text-foreground hover:scale-105 active:scale-95 transition-all shrink-0 border border-border/40"
                 aria-label="Next Project"
               >
                 <ChevronRight size={24} />
