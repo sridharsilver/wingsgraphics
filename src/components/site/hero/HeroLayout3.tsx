@@ -37,7 +37,19 @@ export function HeroLayout3({ settings }: { settings?: VisibilitySettings }) {
         style={{ backgroundImage: `url(${heroImage})` }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background z-0" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[800px] h-[600px] md:h-[800px] bg-brand/10 blur-[120px] rounded-full z-0 pointer-events-none" />
+      {/* Dynamic Animated Central Blur Spotlight */}
+      <motion.div 
+        animate={{
+          scale: [1, 1.15, 0.95, 1],
+          opacity: [0.7, 0.95, 0.75, 0.7],
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[800px] h-[600px] md:h-[800px] bg-brand/10 blur-[120px] rounded-full z-0 pointer-events-none" 
+      />
       
       <div className="relative z-10 w-full mx-auto max-w-7xl container-px text-center pt-10 lg:pt-0">
         <motion.div

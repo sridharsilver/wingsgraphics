@@ -81,12 +81,59 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
       />
 
       {/* Breathing Glowing Orbs - High End Fluid Aurora Effect */}
-      <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-gradient-to-br from-[#4A72FF]/8 to-[#7B59FF]/8 rounded-full blur-[130px] pointer-events-none animate-[float-orb-1_20s_ease-in-out_infinite]" />
-      <div className="absolute bottom-[-15%] right-[-10%] w-[700px] h-[700px] bg-gradient-to-tr from-[#BD43FF]/6 to-blue-500/6 rounded-full blur-[150px] pointer-events-none animate-[float-orb-2_25s_ease-in-out_infinite]" />
-      <div className="absolute top-[30%] left-[40%] w-[500px] h-[500px] bg-gradient-to-r from-[#4A72FF]/4 to-[#BD43FF]/4 rounded-full blur-[140px] pointer-events-none animate-[float-orb-3_22s_ease-in-out_infinite]" />
+      <motion.div 
+        animate={{
+          x: [0, 45, -25, 0],
+          y: [0, -35, 25, 0],
+          scale: [1, 1.12, 0.92, 1],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-gradient-to-br from-[#4A72FF]/8 to-[#7B59FF]/8 rounded-full blur-[130px] pointer-events-none" 
+      />
+      <motion.div 
+        animate={{
+          x: [0, -55, 35, 0],
+          y: [0, 45, -35, 0],
+          scale: [1, 1.18, 0.93, 1],
+        }}
+        transition={{
+          duration: 25,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute bottom-[-15%] right-[-10%] w-[700px] h-[700px] bg-gradient-to-tr from-[#BD43FF]/6 to-blue-500/6 rounded-full blur-[150px] pointer-events-none" 
+      />
+      <motion.div 
+        animate={{
+          x: [0, 35, -45, 0],
+          y: [0, -45, 35, 0],
+          scale: [1, 1.08, 0.91, 1],
+        }}
+        transition={{
+          duration: 22,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute top-[30%] left-[40%] w-[500px] h-[500px] bg-gradient-to-r from-[#4A72FF]/4 to-[#BD43FF]/4 rounded-full blur-[140px] pointer-events-none" 
+      />
 
       {/* Soft spotlight behind the showcase card for extra depth */}
-      <div className="absolute right-[5%] top-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-[#7B59FF]/4 blur-[130px] rounded-full pointer-events-none hidden lg:block" />
+      <motion.div 
+        animate={{
+          scale: [1, 1.12, 1],
+          opacity: [0.6, 0.9, 0.6],
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute right-[5%] top-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-[#7B59FF]/4 blur-[130px] rounded-full pointer-events-none hidden lg:block" 
+      />
 
       <div className="w-full mx-auto max-w-7xl container-px grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center h-full relative z-10">
         
