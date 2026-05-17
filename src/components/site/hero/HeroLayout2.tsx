@@ -78,7 +78,7 @@ export function HeroLayout2({ settings }: { settings?: VisibilitySettings }) {
       <div className="h-24" />
 
       {/* Main Content Area */}
-      <div className="relative z-10 w-full mx-auto max-w-7xl px-6 sm:px-10 md:px-16 lg:px-20 flex flex-col items-center justify-center text-center flex-grow py-12">
+      <div className="relative z-10 w-full mx-auto max-w-7xl px-6 sm:px-10 md:px-16 lg:px-20 2xl:px-0 flex flex-col items-center justify-center text-center flex-grow py-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -132,7 +132,7 @@ export function HeroLayout2({ settings }: { settings?: VisibilitySettings }) {
       </div>
 
       {/* Centered stats section at the bottom, exact match to Image 2 design */}
-      <div className="relative z-10 w-full mx-auto max-w-7xl px-6 sm:px-10 md:px-16 lg:px-20 pb-12 sm:pb-16 mt-auto">
+      <div className="relative z-10 w-full mx-auto max-w-7xl px-6 sm:px-10 md:px-16 lg:px-20 2xl:px-0 pb-12 sm:pb-16 mt-auto">
         {/* Subtle Horizontal Divider */}
         <div className="w-full h-px bg-white/10 mb-8 sm:mb-10" />
 

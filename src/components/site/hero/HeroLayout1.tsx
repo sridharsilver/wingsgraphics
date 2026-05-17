@@ -88,7 +88,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
       {/* Soft spotlight behind the showcase card for extra depth */}
       <div className="absolute right-[5%] top-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-[#7B59FF]/4 blur-[130px] rounded-full pointer-events-none hidden lg:block" />
 
-      <div className="w-full mx-auto max-w-7xl px-6 sm:px-10 md:px-16 lg:px-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center h-full relative z-10">
+      <div className="w-full mx-auto max-w-7xl px-6 sm:px-10 md:px-16 lg:px-20 2xl:px-0 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center h-full relative z-10">
         
         {/* Left Column - Content */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left w-full max-w-xl xl:max-w-2xl pt-6 lg:pt-0">
