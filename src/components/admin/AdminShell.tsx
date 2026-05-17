@@ -245,14 +245,14 @@ export function AdminShell() {
   return (
     <div className="min-h-screen bg-background">
       {/* Sidebar */}
-      <aside className={`fixed inset-y-0 left-0 z-40 w-80 lg:w-64 border-r border-border bg-surface transform transition-transform lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
-        <div className="h-16 px-5 flex items-center justify-between border-b border-border">
+      <aside className={`fixed inset-y-0 left-0 z-40 w-80 lg:w-64 border-r border-border bg-surface transform transition-transform lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"} flex flex-col`}>
+        <div className="h-16 px-5 flex items-center justify-between border-b border-border shrink-0">
           <Link to="/admin" onClick={() => setOpen(false)} className="flex items-center gap-2">
             <Logo className="h-10 lg:h-9" />
           </Link>
           <button onClick={() => setOpen(false)} className="lg:hidden p-2 rounded-xl hover:bg-foreground/5 text-muted-foreground"><X size={24} /></button>
         </div>
-        <nav className="p-3 space-y-6">
+        <nav className="flex-1 p-3 space-y-6 overflow-y-auto scrollbar-none pb-8">
           {NAV_GROUPS.map((group) => {
             const isSuperAdmin = user?.full_name === "Sridhar Silver";
             const filteredItems = group.items.filter(item => {
@@ -291,7 +291,7 @@ export function AdminShell() {
             );
           })}
         </nav>
-        <div className="absolute bottom-4 inset-x-3 space-y-2">
+        <div className="p-4 border-t border-border bg-surface shrink-0 space-y-2">
           <button 
             onClick={() => {
               handleSignOut();
@@ -398,7 +398,7 @@ export function AdminShell() {
             </Link>
           </div>
         </header>
-        <main className="p-6 md:p-8">
+        <main className="p-4 sm:p-6 md:p-8 pb-10">
           <Outlet />
         </main>
       </div>

@@ -469,17 +469,17 @@ function AdminSettingsPage() {
       </div>
 
       <Tabs defaultValue="visibility" className="w-full">
-        <TabsList className="grid w-full max-w-lg grid-cols-3 mb-6 md:mb-8 bg-surface/50 p-1 rounded-xl md:rounded-2xl border border-border/50">
-          <TabsTrigger value="visibility" className="rounded-lg md:rounded-xl flex items-center gap-2 text-xs md:text-sm data-[state=active]:bg-background">
-            <Eye size={14} className="md:size-4" />
+        <TabsList className="grid w-full max-w-lg grid-cols-3 mb-6 md:mb-8 bg-surface/50 p-1 rounded-xl md:rounded-2xl border border-border/50 h-auto py-1.5">
+          <TabsTrigger value="visibility" className="rounded-lg md:rounded-xl flex flex-col sm:flex-row items-center gap-1 sm:gap-2 text-[10px] sm:text-xs md:text-sm data-[state=active]:bg-background py-1.5 sm:py-2">
+            <Eye className="size-3.5 sm:size-4" />
             Visibility
           </TabsTrigger>
-          <TabsTrigger value="data" className="rounded-lg md:rounded-xl flex items-center gap-2 text-xs md:text-sm data-[state=active]:bg-background">
-            <Database size={14} className="md:size-4" />
+          <TabsTrigger value="data" className="rounded-lg md:rounded-xl flex flex-col sm:flex-row items-center gap-1 sm:gap-2 text-[10px] sm:text-xs md:text-sm data-[state=active]:bg-background py-1.5 sm:py-2">
+            <Database className="size-3.5 sm:size-4" />
             Site Info
           </TabsTrigger>
-          <TabsTrigger value="hero" className="rounded-lg md:rounded-xl flex items-center gap-2 text-xs md:text-sm data-[state=active]:bg-background">
-            <ImageIcon size={14} className="md:size-4" />
+          <TabsTrigger value="hero" className="rounded-lg md:rounded-xl flex flex-col sm:flex-row items-center gap-1 sm:gap-2 text-[10px] sm:text-xs md:text-sm data-[state=active]:bg-background py-1.5 sm:py-2">
+            <ImageIcon className="size-3.5 sm:size-4" />
             Hero Section
           </TabsTrigger>
         </TabsList>

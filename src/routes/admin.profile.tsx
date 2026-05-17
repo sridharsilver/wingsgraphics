@@ -277,7 +277,7 @@ function ProfilePage() {
                   </div>
                 </div>
               </div>
-              <Button type="submit" disabled={loading} className="bg-gradient-brand text-brand-foreground shadow-glow font-semibold px-8">
+              <Button type="submit" disabled={loading} className="w-full sm:w-auto bg-gradient-brand text-brand-foreground shadow-glow font-semibold px-8">
                 {loading ? "Saving..." : "Save Profile Changes"}
               </Button>
             </form>
@@ -338,7 +338,7 @@ function ProfilePage() {
                 </div>
               </div>
 
-              <Button type="submit" disabled={loading} className="bg-gradient-brand text-brand-foreground shadow-glow font-semibold px-8 h-11">
+              <Button type="submit" disabled={loading} className="w-full sm:w-auto bg-gradient-brand text-brand-foreground shadow-glow font-semibold px-8 h-11">
                 {loading ? "Updating..." : "Update Password"}
               </Button>
             </form>

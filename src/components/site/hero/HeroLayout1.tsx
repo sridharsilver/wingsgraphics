@@ -52,7 +52,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
   }, [activeSlides]);
 
   return (
-    <section className="relative min-h-screen bg-[#06080C] flex items-center pt-28 pb-16 lg:pt-0 lg:pb-0 overflow-hidden text-white">
+    <section className="relative min-h-screen bg-[#06080C] flex items-center pt-28 pb-16 lg:py-24 xl:py-20 2xl:py-0 overflow-hidden text-white">
       {/* Custom float animations for a highly premium organic breathing effect */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes float-orb-1 {
@@ -88,7 +88,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
       {/* Soft spotlight behind the showcase card for extra depth */}
       <div className="absolute right-[5%] top-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-[#7B59FF]/4 blur-[130px] rounded-full pointer-events-none hidden lg:block" />
 
-      <div className="w-full mx-auto max-w-7xl container-px grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center h-full relative z-10">
+      <div className="w-full mx-auto max-w-7xl px-6 sm:px-10 md:px-16 lg:px-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center h-full relative z-10">
         
         {/* Left Column - Content */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left w-full max-w-xl xl:max-w-2xl pt-6 lg:pt-0">
@@ -100,7 +100,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
 
           {/* Heading */}
           <h1 
-            className="text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[4.5rem] xl:text-[5.5rem] font-black leading-[1.05] tracking-tight text-white pb-6"
+            className="text-[2.5rem] sm:text-5xl md:text-5xl lg:text-[3.25rem] xl:text-[4rem] 2xl:text-[5.5rem] font-black leading-[1.05] tracking-tight text-white pb-6"
             dangerouslySetInnerHTML={{ __html: settings?.layout1_heading || 'Premium<br />branding<br /><span class="bg-gradient-to-r from-[#4A72FF] via-[#7B59FF] to-[#BD43FF] bg-clip-text text-transparent">& print</span>' }}
           />
 
@@ -121,7 +121,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
           </div>
 
           {/* Stats Bar */}
-          <div className="mt-16 sm:mt-24 flex items-center justify-center md:justify-start gap-8 sm:gap-12 w-full">
+          <div className="mt-10 lg:mt-12 xl:mt-16 flex items-center justify-center md:justify-start gap-8 sm:gap-12 w-full">
             <div className="flex flex-col">
               <span className="text-2xl sm:text-3xl font-black text-white leading-none tracking-tight">12+</span>
               <span className="text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold mt-2">YEARS EXPERIENCE</span>
@@ -144,7 +144,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
         </div>
 
         {/* Right Column - Media Showcase Card (Matches Image perfectly) */}
-        <div className="relative w-full h-[500px] sm:h-[600px] lg:h-[75vh] lg:max-h-[750px] aspect-[3/4] rounded-[40px] overflow-hidden ml-auto shadow-2xl border border-white/5 group">
+        <div className="relative w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[440px] xl:max-w-[480px] aspect-[3/4] rounded-[40px] overflow-hidden mx-auto lg:ml-auto shadow-2xl border border-white/5 group">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}

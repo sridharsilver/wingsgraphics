@@ -272,7 +272,7 @@ function HomePage() {
       {/* PROCESS */}
       <Section>
         <SectionHeader eyebrow="Our process" title="From brief to brilliance" />
-        <div className="grid md:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {steps.map((s, i) => (
             <motion.div
               key={s.n}
@@ -304,7 +304,7 @@ function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
-                  className="rounded-2xl glass shadow-elegant p-5 group hover:shadow-glow transition-all duration-300 w-full sm:w-[calc(50%-1.25rem)] md:w-[calc(25%-1.25rem)] max-w-[280px]"
+                  className="rounded-2xl glass shadow-elegant p-5 group hover:shadow-glow transition-all duration-300 w-full sm:w-[calc(50%-1.25rem)] md:w-[calc(33.333%-1.25rem)] lg:w-[calc(25%-1.25rem)] max-w-[280px]"
                 >
                   <div className="aspect-square rounded-xl overflow-hidden bg-surface mb-4">
                     {p.image_url ? (

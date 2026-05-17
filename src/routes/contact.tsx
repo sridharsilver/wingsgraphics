@@ -115,8 +115,8 @@ function ContactPage() {
       />
 
       <Section>
-        <div className="grid lg:grid-cols-5 gap-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="lg:col-span-3 rounded-3xl glass shadow-elegant p-8 flex flex-col">
+        <div className="grid md:grid-cols-5 gap-6 md:gap-8">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="md:col-span-3 rounded-3xl glass shadow-elegant p-6 md:p-8 flex flex-col">
             {!settings.show_enquiry_form ? (
               <div className="flex-1 flex flex-col items-center justify-center py-12 min-h-[400px] text-center">
                 <div className="size-16 rounded-full bg-amber-500/10 grid place-items-center text-amber-500 mb-6"><Clock size={24} /></div>
@@ -237,7 +237,7 @@ function ContactPage() {
             </div>
           )}
 
-            <div className="lg:col-span-2 flex flex-col gap-5">
+            <div className="md:col-span-2 flex flex-col gap-5">
               <div className="flex-1 flex flex-col gap-4">
                 <Info icon={MapPin} t="Studio" d={settings.studio_address || "SRT 12, Sanath Nagar, Hyderabad, TS 500018"} />
                 <Info icon={Phone} t="Phone" d={settings.contact_phone || "+91 9951979988"} />

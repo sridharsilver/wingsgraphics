@@ -39,7 +39,7 @@ export function HeroLayout3({ settings }: { settings?: VisibilitySettings }) {
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background z-0" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[800px] h-[600px] md:h-[800px] bg-brand/10 blur-[120px] rounded-full z-0 pointer-events-none" />
       
-      <div className="relative z-10 w-full mx-auto max-w-7xl container-px text-center pt-10 lg:pt-0">
+      <div className="relative z-10 w-full mx-auto max-w-7xl px-6 sm:px-10 md:px-16 lg:px-20 text-center pt-10 lg:pt-0">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

@@ -124,7 +124,7 @@ function PortfolioPage() {
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.95, y: 20 }}
                 onClick={(e) => e.stopPropagation()}
-                className="w-full max-w-3xl rounded-3xl glass shadow-elegant overflow-hidden"
+                className="w-full max-w-3xl rounded-3xl glass shadow-elegant overflow-hidden max-h-[90vh] overflow-y-auto"
               >
                 <div className="aspect-[16/9] relative overflow-hidden">
                   <img src={open.image_url} alt={open.title} className="absolute inset-0 w-full h-full object-cover" />

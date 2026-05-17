@@ -125,7 +125,7 @@ export function Header() {
           </div>
         </nav>
         {open && (
-          <div className="lg:hidden mt-2 glass rounded-2xl p-4 space-y-1 pointer-events-auto">
+          <div className="lg:hidden mt-2 glass rounded-2xl p-4 space-y-1 pointer-events-auto animate-in fade-in slide-in-from-top-4 duration-300">
             {visibleNav.map((n) => (
               <Link key={n.to} to={n.to} className="block px-3 py-2.5 rounded-lg text-sm hover:bg-foreground/5">{n.label}</Link>
             ))}

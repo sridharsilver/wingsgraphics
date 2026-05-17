@@ -27,8 +27,8 @@ export function Footer() {
 
   return (
     <footer className="mt-12 md:mt-16 border-t border-border bg-surface/50">
-      <div className="mx-auto max-w-7xl container-px py-16 grid gap-10 md:grid-cols-4">
-        <div className="md:col-span-2">
+      <div className="mx-auto max-w-7xl container-px py-16 grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="sm:col-span-2 lg:col-span-2">
           <Link to="/" className="inline-block mb-4">
             <Logo className="h-11" />
           </Link>
