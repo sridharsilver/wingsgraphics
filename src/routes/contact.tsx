@@ -35,7 +35,7 @@ const COUNTRIES = [
 ];
 
 function ContactPage() {
-  const { settings } = useSiteSettings();
+  const { settings, loading: settingsLoading } = useSiteSettings();
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showChoice, setShowChoice] = useState(false);
@@ -117,7 +117,35 @@ function ContactPage() {
       <Section>
         <div className="grid md:grid-cols-5 gap-6 md:gap-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="md:col-span-3 rounded-3xl glass shadow-elegant p-6 md:p-8 flex flex-col">
-            {!settings.show_enquiry_form ? (
+            {settingsLoading ? (
+              <div className="grid gap-5 animate-pulse py-2">
+                <div className="grid sm:grid-cols-2 gap-5">
+                  <div className="space-y-2">
+                    <div className="h-3 bg-white/10 rounded w-1/4" />
+                    <div className="h-12 bg-white/5 rounded-2xl border border-white/5" />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-3 bg-white/10 rounded w-1/4" />
+                    <div className="h-12 bg-white/5 rounded-2xl border border-white/5" />
+                  </div>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-5">
+                  <div className="space-y-2">
+                    <div className="h-3 bg-white/10 rounded w-1/4" />
+                    <div className="h-12 bg-white/5 rounded-2xl border border-white/5" />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-3 bg-white/10 rounded w-1/4" />
+                    <div className="h-12 bg-white/5 rounded-2xl border border-white/5" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="h-3 bg-white/10 rounded w-1/4" />
+                  <div className="h-32 bg-white/5 rounded-2xl border border-white/5" />
+                </div>
+                <div className="h-12 bg-white/10 rounded-xl w-36 mt-2" />
+              </div>
+            ) : !settings.show_enquiry_form ? (
               <div className="flex-1 flex flex-col items-center justify-center py-12 min-h-[400px] text-center">
                 <div className="size-16 rounded-full bg-amber-500/10 grid place-items-center text-amber-500 mb-6"><Clock size={24} /></div>
                 <h3 className="text-2xl font-bold mb-3">Enquiries Temporarily Closed</h3>
@@ -239,43 +267,65 @@ function ContactPage() {
 
             <div className="md:col-span-2 flex flex-col gap-5">
               <div className="flex-1 flex flex-col gap-4">
-                <Info icon={MapPin} t="Studio" d={settings.studio_address || "SRT 12, Sanath Nagar, Hyderabad, TS 500018"} />
-                <Info icon={Phone} t="Phone" d={settings.contact_phone || "+91 9951979988"} />
-                <Info icon={Mail} t="Email" d={settings.contact_email || "hello@wingsgraphics.in"} />
-                <Info icon={Clock} t="Hours" d={settings.working_hours || "Mon–Sat · 10:00 — 19:00"} />
+                <Info icon={MapPin} t="Studio" d={settings.studio_address || "SRT 12, Sanath Nagar, Hyderabad, TS 500018"} loading={settingsLoading} />
+                <Info icon={Phone} t="Phone" d={settings.contact_phone || "+91 9951979988"} loading={settingsLoading} />
+                <Info icon={Mail} t="Email" d={settings.contact_email || "hello@wingsgraphics.in"} loading={settingsLoading} />
+                <Info icon={Clock} t="Hours" d={settings.working_hours || "Mon–Sat · 10:00 — 19:00"} loading={settingsLoading} />
               </div>
 
-              <a 
-                href={`https://wa.me/${formatWhatsAppNumber(settings.whatsapp_number || "919951979988")}?text=${encodeURIComponent(settings.whatsapp_message || "")}`} 
-                target="_blank" 
-                rel="noopener" 
-                className="flex items-center justify-between p-6 rounded-3xl bg-gradient-to-br from-[#25D366] to-[#075E54] text-white shadow-xl shadow-green-500/20 hover:shadow-green-500/40 transition-all hover:scale-[1.02] active:scale-[0.98] group"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="size-12 rounded-2xl bg-white/20 flex items-center justify-center backdrop-blur-md group-hover:scale-110 transition-all duration-500">
-                    <MessageCircle size={28} />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-[10px] uppercase tracking-[0.2em] opacity-80 font-black">Instant Quotes</span>
-                    <span className="font-bold text-xl tracking-tight">Chat on WhatsApp</span>
+              {settingsLoading ? (
+                <div className="h-[96px] rounded-3xl bg-white/5 border border-white/5 animate-pulse flex items-center p-6 gap-4 animate-in fade-in duration-300">
+                  <div className="size-12 rounded-2xl bg-white/10 shrink-0" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-2.5 bg-white/10 rounded w-1/3" />
+                    <div className="h-4 bg-white/10 rounded w-2/3" />
                   </div>
                 </div>
-                <div className="size-10 rounded-full bg-white/10 flex items-center justify-center group-hover:translate-x-1 transition-transform backdrop-blur-sm border border-white/10">
-                  <span className="text-xl font-thin">→</span>
-                </div>
-              </a>
+              ) : (
+                <a 
+                  href={`https://wa.me/${formatWhatsAppNumber(settings.whatsapp_number || "919951979988")}?text=${encodeURIComponent(settings.whatsapp_message || "")}`} 
+                  target="_blank" 
+                  rel="noopener" 
+                  className="flex items-center justify-between p-6 rounded-3xl bg-gradient-to-br from-[#25D366] to-[#075E54] text-white shadow-xl shadow-green-500/20 hover:shadow-green-500/40 transition-all hover:scale-[1.02] active:scale-[0.98] group"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="size-12 rounded-2xl bg-white/20 flex items-center justify-center backdrop-blur-md group-hover:scale-110 transition-all duration-500">
+                      <MessageCircle size={28} />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[10px] uppercase tracking-[0.2em] opacity-80 font-black">Instant Quotes</span>
+                      <span className="font-bold text-xl tracking-tight">Chat on WhatsApp</span>
+                    </div>
+                  </div>
+                  <div className="size-10 rounded-full bg-white/10 flex items-center justify-center group-hover:translate-x-1 transition-transform backdrop-blur-sm border border-white/10">
+                    <span className="text-xl font-thin">→</span>
+                  </div>
+                </a>
+              )}
 
-              <div className="flex items-center gap-3 px-2">
-                <SocialIcon icon={Instagram} href={settings.social_instagram} label="instagram" brandColor="#E4405F" />
-                <SocialIcon icon={Facebook} href={settings.social_facebook} label="facebook" brandColor="#1877F2" />
-                <SocialIcon icon={Linkedin} href={settings.social_linkedin} label="linkedin" brandColor="#0A66C2" />
-                <SocialIcon icon={Twitter} href={settings.social_twitter} label="twitter" brandColor="#1DA1F2" />
-              </div>
+              {settingsLoading ? (
+                <div className="flex items-center gap-3 px-2">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="size-12 rounded-2xl bg-white/5 border border-white/5 animate-pulse" />
+                  ))}
+                </div>
+              ) : (
+                <div className="flex items-center gap-3 px-2">
+                  <SocialIcon icon={Instagram} href={settings.social_instagram} label="instagram" brandColor="#E4405F" />
+                  <SocialIcon icon={Facebook} href={settings.social_facebook} label="facebook" brandColor="#1877F2" />
+                  <SocialIcon icon={Linkedin} href={settings.social_linkedin} label="linkedin" brandColor="#0A66C2" />
+                  <SocialIcon icon={Twitter} href={settings.social_twitter} label="twitter" brandColor="#1DA1F2" />
+                </div>
+              )}
             </div>
         </div>
       </Section>
 
-      {settings.show_contact_map && (
+      {settingsLoading ? (
+        <Section>
+          <div className="rounded-3xl h-[420px] bg-white/5 border border-white/5 animate-pulse" />
+        </Section>
+      ) : settings.show_contact_map ? (
         <Section>
           <div className="rounded-3xl overflow-hidden glass shadow-elegant">
             <iframe
@@ -286,7 +336,7 @@ function ContactPage() {
             />
           </div>
         </Section>
-      )}
+      ) : null}
     </SiteLayout>
   );
 }
@@ -452,10 +502,10 @@ function CountryCodeSelector({ selected, onSelect }: { selected: typeof COUNTRIE
   );
 }
 
-function Info({ icon: Icon, t, d }: { icon: React.ElementType; t: string; d: string }) {
+function Info({ icon: Icon, t, d, loading }: { icon: React.ElementType; t: string; d: string; loading?: boolean }) {
   return (
     <motion.div 
-      whileHover={{ x: 5 }}
+      whileHover={loading ? {} : { x: 5 }}
       className="flex items-start gap-4 p-5 rounded-2xl glass border border-white/5 hover:border-brand/30 transition-all duration-300 group"
     >
       <div className="size-12 rounded-xl bg-white/5 flex items-center justify-center text-zinc-500 dark:text-white shrink-0 group-hover:scale-110 group-hover:bg-brand/10 group-hover:text-brand transition-all duration-500 border border-white/5">
@@ -463,7 +513,14 @@ function Info({ icon: Icon, t, d }: { icon: React.ElementType; t: string; d: str
       </div>
       <div className="flex-1 min-w-0">
         <div className="text-[10px] uppercase tracking-[0.2em] text-foreground/70 font-bold mb-1">{t}</div>
-        <div className="font-semibold text-sm leading-relaxed group-hover:text-foreground transition-colors line-clamp-2">{d}</div>
+        {loading ? (
+          <div className="space-y-1.5 py-1">
+            <div className="h-3.5 bg-white/10 rounded animate-pulse w-5/6" />
+            <div className="h-3 bg-white/10 rounded animate-pulse w-1/2" />
+          </div>
+        ) : (
+          <div className="font-semibold text-sm leading-relaxed group-hover:text-foreground transition-colors line-clamp-2">{d}</div>
+        )}
       </div>
     </motion.div>
   );
