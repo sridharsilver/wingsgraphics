@@ -129,16 +129,19 @@ function RootComponent() {
   const [isRedirecting, setIsRedirecting] = useState(false);
 
   useEffect(() => {
-    // If running as a native app (Android/APK), handle redirects while splash is showing
-    if (Capacitor.isNativePlatform() && pathname === "/") {
-      setIsRedirecting(true);
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        if (session) {
-          navigate({ to: "/admin" }).then(() => setIsRedirecting(false));
-        } else {
-          navigate({ to: "/login" }).then(() => setIsRedirecting(false));
-        }
-      });
+    // If running as a native app (Android/APK), enforce strict Admin & Login route restriction
+    if (Capacitor.isNativePlatform()) {
+      const isAllowedRoute = pathname.startsWith("/admin") || pathname === "/login";
+      if (!isAllowedRoute) {
+        setIsRedirecting(true);
+        supabase.auth.getSession().then(({ data: { session } }) => {
+          if (session) {
+            navigate({ to: "/admin" }).then(() => setIsRedirecting(false));
+          } else {
+            navigate({ to: "/login" }).then(() => setIsRedirecting(false));
+          }
+        });
+      }
     } else {
       setIsRedirecting(false);
     }

@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.wingsgraphics.admin',
-  appName: 'Wings Graphics',
+  appName: 'Wings Graphics Admin',
   webDir: 'dist',
   plugins: {
     PushNotifications: {
