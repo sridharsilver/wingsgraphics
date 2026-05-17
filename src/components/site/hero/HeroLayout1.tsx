@@ -91,7 +91,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
       <div className="w-full mx-auto max-w-7xl container-px grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center h-full relative z-10">
         
         {/* Left Column - Content */}
-        <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full max-w-xl xl:max-w-2xl pt-6 lg:pt-0">
+        <div className="flex flex-col items-center md:items-start text-center md:text-left w-full max-w-xl xl:max-w-2xl pt-6 lg:pt-0">
           {/* Eyebrow Pill Badge */}
           <div className="inline-flex items-center gap-2.5 px-4 py-1.5 text-[9px] sm:text-[10px] uppercase tracking-[0.25em] rounded-full border border-white/10 bg-white/5 text-white/90 font-bold mb-8 shadow-sm backdrop-blur-sm">
             <Sparkles size={11} className="text-white/80 animate-pulse" /> 
@@ -105,12 +105,12 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
           />
 
           {/* Subtext */}
-          <p className="text-white/60 text-base sm:text-lg max-w-[480px] mx-auto lg:mx-0 leading-relaxed font-medium mb-8">
+          <p className="text-white/60 text-base sm:text-lg max-w-[480px] mx-auto md:mx-0 leading-relaxed font-medium mb-8">
             {settings?.layout1_subtext || 'Wings Graphics blends elite print craft with strategic digital design to elevate ambitious brands into industry leaders.'}
           </p>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center lg:justify-start">
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center md:justify-start">
             <Link to={settings?.layout1_button_link || "/contact"} className="w-full sm:w-auto group relative px-8 py-4 rounded-full bg-gradient-to-r from-[#4A72FF] to-[#8C4BFF] hover:from-[#3b63f0] hover:to-[#7c3aeb] text-white font-bold hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 text-sm sm:text-base shadow-lg shadow-blue-500/10">
               {settings?.layout1_button_text || 'Start Your Project'} 
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -121,7 +121,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
           </div>
 
           {/* Stats Bar */}
-          <div className="mt-16 sm:mt-24 flex items-center justify-center lg:justify-start gap-8 sm:gap-12 w-full">
+          <div className="mt-16 sm:mt-24 flex items-center justify-center md:justify-start gap-8 sm:gap-12 w-full">
             <div className="flex flex-col">
               <span className="text-2xl sm:text-3xl font-black text-white leading-none tracking-tight">12+</span>
               <span className="text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold mt-2">YEARS EXPERIENCE</span>
