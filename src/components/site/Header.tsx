@@ -63,6 +63,10 @@ export function Header() {
 
   useEffect(() => { setOpen(false); }, [path]);
 
+  const isHome = path === "/";
+  const isDarkHero = !visibility || visibility.hero_layout !== 'layout3';
+  const forceDark = isHome && !scrolled && !open && isDarkHero;
+
   return (
     <>
       {open && (
@@ -72,18 +76,29 @@ export function Header() {
           aria-hidden="true"
         />
       )}
-      <header className={`fixed top-0 inset-x-0 z-50 pointer-events-none transition-all duration-300 ${scrolled ? "py-2" : "py-4"}`}>
+      <header className={`fixed top-0 inset-x-0 z-50 pointer-events-none transition-all duration-300 border-b ${scrolled ? "py-2 bg-background/50 border-border/40 backdrop-blur-md" : "py-4 border-transparent"}`}>
       <div className={`mx-auto max-w-7xl container-px`}>
         <nav className={`pointer-events-auto flex items-center justify-between rounded-2xl px-4 md:px-6 py-3 transition-all duration-300 ${scrolled || open ? "glass shadow-elegant" : ""}`}>
           <Link to="/" className="flex items-center gap-2">
-            <Logo className="h-9 md:h-8" />
+            <Logo className="h-9 md:h-8" forceDark={forceDark} />
           </Link>
           <ul className="hidden lg:flex items-center gap-1">
             {visibleNav.map((n) => {
               const active = path === n.to;
               return (
                 <li key={n.to}>
-                  <Link to={n.to} className={`px-3.5 py-2 text-sm rounded-lg transition-colors ${active ? "text-foreground bg-foreground/5" : "text-muted-foreground hover:text-foreground"}`}>
+                  <Link 
+                    to={n.to} 
+                    className={`px-3.5 py-2 text-sm rounded-lg transition-colors ${
+                      active 
+                        ? forceDark 
+                          ? "text-white bg-white/10" 
+                          : "text-foreground bg-foreground/5" 
+                        : forceDark 
+                          ? "text-white/60 hover:text-white" 
+                          : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
                     {n.label}
                   </Link>
                 </li>
@@ -91,7 +106,7 @@ export function Header() {
             })}
           </ul>
           <div className="hidden lg:flex items-center gap-3">
-            <ThemeToggle />
+            <ThemeToggle forceDark={forceDark} />
             {showContactButton && (
               <Link to="/contact" className="px-4 py-2 text-sm font-medium rounded-lg bg-gradient-brand text-brand-foreground shadow-glow hover:opacity-90 transition">
                 Get a Quote
@@ -99,8 +114,12 @@ export function Header() {
             )}
           </div>
           <div className="flex lg:hidden items-center gap-2">
-            <ThemeToggle />
-            <button onClick={() => setOpen((v) => !v)} className="p-2 rounded-md text-foreground" aria-label="Menu">
+            <ThemeToggle forceDark={forceDark} />
+            <button 
+              onClick={() => setOpen((v) => !v)} 
+              className={`p-2 rounded-md transition-colors ${forceDark ? "text-white hover:bg-white/10" : "text-foreground"}`} 
+              aria-label="Menu"
+            >
               {open ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>

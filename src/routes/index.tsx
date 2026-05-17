@@ -91,7 +91,7 @@ function HomePage() {
   }, [settings]);
 
   return (
-    <SiteLayout>
+    <SiteLayout fullBleed>
       <HomeHero />
       <SectionDivider />
 

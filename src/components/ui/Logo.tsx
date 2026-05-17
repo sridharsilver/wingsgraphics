@@ -1,15 +1,13 @@
 import logo from "@/assets/wings-logo.png";
+import { useTheme } from "@/hooks/use-theme";
 
-export function Logo({ className = "h-8" }: { className?: string }) {
-  return (
-    <>
-      {/* Light Mode */}
-      <div className={`relative ${className} dark:hidden inline-block`}>
-        <img src={logo} alt="Wings Graphics" className="h-full w-auto object-contain" />
-      </div>
-      
-      {/* Dark Mode */}
-      <div className={`relative ${className} hidden dark:inline-block`}>
+export function Logo({ className = "h-8", forceDark = false }: { className?: string; forceDark?: boolean }) {
+  const { theme } = useTheme();
+  const isDark = theme === "dark" || forceDark;
+
+  if (isDark) {
+    return (
+      <div className={`relative ${className} inline-block`}>
         <img 
           src={logo} 
           alt="Wings Graphics" 
@@ -22,6 +20,12 @@ export function Logo({ className = "h-8" }: { className?: string }) {
           style={{ clipPath: 'inset(0 72% 0 0)' }} 
         />
       </div>
-    </>
+    );
+  }
+
+  return (
+    <div className={`relative ${className} inline-block`}>
+      <img src={logo} alt="Wings Graphics" className="h-full w-auto object-contain" />
+    </div>
   );
 }

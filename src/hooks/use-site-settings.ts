@@ -21,6 +21,25 @@ export interface VisibilitySettings {
   social_linkedin: string;
   social_twitter: string;
   chatbot_voice_enabled: boolean;
+  hero_layout: 'layout1' | 'layout2' | 'layout3';
+  // Layout 1 specific
+  layout1_badge: string;
+  layout1_heading: string;
+  layout1_subtext: string;
+  layout1_button_text: string;
+  layout1_button_link: string;
+  // Layout 2 specific
+  layout2_badge: string;
+  layout2_heading: string;
+  layout2_subtext: string;
+  layout2_button_text: string;
+  layout2_button_link: string;
+  // Layout 3 specific
+  layout3_badge: string;
+  layout3_heading: string;
+  layout3_subtext: string;
+  layout3_button_text: string;
+  layout3_button_link: string;
 }
 
 const DEFAULT_SETTINGS: VisibilitySettings = {
@@ -43,6 +62,28 @@ const DEFAULT_SETTINGS: VisibilitySettings = {
   social_linkedin: 'https://linkedin.com/company/wingsgraphics',
   social_twitter: 'https://twitter.com/wingsgraphics',
   chatbot_voice_enabled: false,
+  hero_layout: 'layout1',
+  
+  // Layout 1 Defaults
+  layout1_badge: 'PREMIUM STUDIO STANDARD',
+  layout1_heading: 'Premium<br />branding<br /><span class="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">& print</span>',
+  layout1_subtext: 'Wings Graphics blends elite print craft with strategic digital design to elevate ambitious brands into industry leaders.',
+  layout1_button_text: 'Start Your Project',
+  layout1_button_link: '/contact',
+
+  // Layout 2 Defaults
+  layout2_badge: 'Premium Studio Standard',
+  layout2_heading: 'Premium<br />branding<br /><span class="text-gradient-brand">& print</span>',
+  layout2_subtext: 'Wings Graphics blends elite print craft with strategic digital design to elevate ambitious brands into industry leaders.',
+  layout2_button_text: 'Start Your Project',
+  layout2_button_link: '/contact',
+
+  // Layout 3 Defaults
+  layout3_badge: 'Redefining Excellence',
+  layout3_heading: 'Design that <span class="text-gradient-brand italic">performs.</span><br />Print that <span class="text-gradient italic">impresses.</span>',
+  layout3_subtext: 'Wings Graphics is a premium design and print studio dedicated to crafting identities and physical materials that leave a lasting impact.',
+  layout3_button_text: 'Start a project',
+  layout3_button_link: '/contact',
 };
 
 export function useSiteSettings() {
@@ -68,7 +109,7 @@ export function useSiteSettings() {
         }
 
         if (data?.value) {
-          setSettings(data.value as VisibilitySettings);
+          setSettings({ ...DEFAULT_SETTINGS, ...(data.value as object) } as VisibilitySettings);
         } else {
           console.log('No site settings found in DB, using defaults.');
         }
@@ -95,7 +136,7 @@ export function useSiteSettings() {
         },
         (payload) => {
           if (payload.new && (payload.new as any).value) {
-            setSettings((payload.new as any).value as VisibilitySettings);
+            setSettings({ ...DEFAULT_SETTINGS, ...((payload.new as any).value as object) } as VisibilitySettings);
           }
         }
       )
