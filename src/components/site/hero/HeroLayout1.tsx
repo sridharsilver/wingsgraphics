@@ -105,7 +105,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
           />
 
           {/* Subtext */}
-          <p className="text-white/60 text-base sm:text-lg max-w-[480px] mx-auto md:mx-0 leading-relaxed font-medium mb-10 lg:mb-16">
+          <p className="text-white/60 text-base sm:text-lg max-w-[480px] mx-auto md:mx-0 leading-relaxed font-medium mb-10 lg:mb-12 xl:mb-10 2xl:mb-16">
             {settings?.layout1_subtext || 'Wings Graphics blends elite print craft with strategic digital design to elevate ambitious brands into industry leaders.'}
           </p>
 
@@ -144,7 +144,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
         </div>
 
         {/* Right Column - Media Showcase Card (Matches Image perfectly) */}
-        <div className="relative w-full aspect-[3/4] rounded-[32px] sm:rounded-[40px] overflow-hidden mx-auto lg:ml-auto shadow-2xl border border-white/5 group">
+        <div className="relative w-full lg:max-w-[380px] xl:max-w-[410px] 2xl:max-w-none aspect-[3/4] rounded-[32px] sm:rounded-[40px] overflow-hidden mx-auto lg:ml-auto shadow-2xl border border-white/5 group">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
