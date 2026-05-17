@@ -100,7 +100,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
 
           {/* Heading */}
           <h1 
-            className="text-[2.5rem] sm:text-5xl md:text-5xl lg:text-[3.25rem] xl:text-[4rem] 2xl:text-[5.5rem] font-black leading-[1.05] tracking-tight text-white pb-6"
+            className="text-[2.5rem] sm:text-5xl md:text-5xl lg:text-[3.25rem] xl:text-[4rem] 2xl:text-[4.75rem] font-black leading-[1.05] tracking-tight text-white pb-6"
             dangerouslySetInnerHTML={{ __html: settings?.layout1_heading || 'Premium<br />branding<br /><span class="bg-gradient-to-r from-[#4A72FF] via-[#7B59FF] to-[#BD43FF] bg-clip-text text-transparent">& print</span>' }}
           />
 
@@ -123,22 +123,22 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
           {/* Stats Bar */}
           <div className="mt-10 lg:mt-12 xl:mt-16 flex items-center justify-center md:justify-start gap-8 sm:gap-12 w-full">
             <div className="flex flex-col">
-              <span className="text-2xl sm:text-3xl font-black text-white leading-none tracking-tight">12+</span>
-              <span className="text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold mt-2">YEARS EXPERIENCE</span>
+              <span className="text-xl sm:text-2xl lg:text-2xl xl:text-[1.625rem] font-black text-white leading-none tracking-tight">12+</span>
+              <span className="text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold mt-1.5">YEARS EXPERIENCE</span>
             </div>
             
             <div className="h-10 w-px bg-white/10" />
             
             <div className="flex flex-col">
-              <span className="text-2xl sm:text-3xl font-black text-white leading-none tracking-tight">500+</span>
-              <span className="text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold mt-2">PREMIUM BRANDS</span>
+              <span className="text-xl sm:text-2xl lg:text-2xl xl:text-[1.625rem] font-black text-white leading-none tracking-tight">500+</span>
+              <span className="text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold mt-1.5">PREMIUM BRANDS</span>
             </div>
             
             <div className="h-10 w-px bg-white/10" />
             
             <div className="flex flex-col">
-              <span className="text-2xl sm:text-3xl font-black text-white leading-none tracking-tight">100%</span>
-              <span className="text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold mt-2">QUALITY PROMISE</span>
+              <span className="text-xl sm:text-2xl lg:text-2xl xl:text-[1.625rem] font-black text-white leading-none tracking-tight">100%</span>
+              <span className="text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold mt-1.5">QUALITY PROMISE</span>
             </div>
           </div>
         </div>
