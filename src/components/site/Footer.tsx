@@ -30,7 +30,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl container-px py-16 grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <div className="sm:col-span-2 lg:col-span-2">
           <Link to="/" className="inline-block mb-4">
-            <Logo className="h-11" />
+            <Logo className="h-8" />
           </Link>
           <p className="text-sm text-muted-foreground max-w-sm">
             From print to pixel — Wings Graphics crafts premium printing, branding and digital experiences for ambitious brands.
