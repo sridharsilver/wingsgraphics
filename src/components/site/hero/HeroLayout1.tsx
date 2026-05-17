@@ -105,7 +105,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
           />
 
           {/* Subtext */}
-          <p className="text-white/60 text-base sm:text-lg max-w-[480px] mx-auto md:mx-0 leading-relaxed font-medium mb-10">
+          <p className="text-white/60 text-base sm:text-lg max-w-[480px] mx-auto md:mx-0 leading-relaxed font-medium mb-10 lg:mb-16">
             {settings?.layout1_subtext || 'Wings Graphics blends elite print craft with strategic digital design to elevate ambitious brands into industry leaders.'}
           </p>
 
