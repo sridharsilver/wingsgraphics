@@ -165,6 +165,13 @@
       linear-gradient(90deg, oklch(var(--foreground) / 0.04) 1px, transparent 1px);
     background-size: 48px 48px;
   }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 @keyframes float {

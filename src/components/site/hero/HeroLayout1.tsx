@@ -11,11 +11,22 @@ import slide2 from "@/assets/portfolio/packaging.png";
 import slide3 from "@/assets/portfolio/brochure.png";
 import slide4 from "@/assets/portfolio/cosmetics.png";
 
-const DEFAULT_SLIDES = [slide1, slide2, slide3, slide4];
+interface SlideItem {
+  url: string;
+  title: string;
+  badge: string;
+}
+
+const DEFAULT_SLIDES: SlideItem[] = [
+  { url: slide1, title: "Elevating global brands", badge: "FEATURED WORK" },
+  { url: slide2, title: "Artisan cosmetics packaging", badge: "PACKAGING DESIGN" },
+  { url: slide3, title: "Premium corporate brochures", badge: "PRINT CRAFT" },
+  { url: slide4, title: "Sleek luxury branding concepts", badge: "BRAND IDENTITY" },
+];
 
 export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [slides, setSlides] = useState<string[]>([]);
+  const [slides, setSlides] = useState<SlideItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -26,9 +37,23 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
           .select('value')
           .eq('key', 'hero_slider_layout1')
           .maybeSingle();
-        
+
         if (data?.value && Array.isArray(data.value) && data.value.length > 0) {
-          setSlides(data.value);
+          const parsedSlides = data.value.map((item, index) => {
+            if (typeof item === 'string') {
+              return {
+                url: item,
+                title: index === 0 ? "Elevating global brands" : "Premium Showcase Work",
+                badge: "FEATURED WORK"
+              };
+            }
+            return {
+              url: item.url || "",
+              title: item.title || "Premium Showcase Work",
+              badge: item.badge || "FEATURED WORK"
+            };
+          });
+          setSlides(parsedSlides);
         } else {
           setSlides(DEFAULT_SLIDES);
         }
@@ -54,7 +79,8 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
   return (
     <section className="relative min-h-screen bg-[#06080C] flex items-center pt-28 pb-16 lg:py-24 xl:py-20 2xl:py-0 overflow-hidden text-white">
       {/* Custom float animations for a highly premium organic breathing effect */}
-      <style dangerouslySetInnerHTML={{__html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes float-orb-1 {
           0%, 100% { transform: translate(0px, 0px) scale(1); }
           50% { transform: translate(40px, -30px) scale(1.15); }
@@ -70,7 +96,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
       `}} />
 
       {/* Background Micro Grid (Faded at edges with radial mask) */}
-      <div 
+      <div
         className="absolute inset-0 opacity-[0.25] pointer-events-none"
         style={{
           backgroundImage: "radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px)",
@@ -81,7 +107,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
       />
 
       {/* Breathing Glowing Orbs - High End Fluid Aurora Effect */}
-      <motion.div 
+      <motion.div
         animate={{
           x: [0, 45, -25, 0],
           y: [0, -35, 25, 0],
@@ -92,9 +118,9 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-gradient-to-br from-[#4A72FF]/8 to-[#7B59FF]/8 rounded-full blur-[130px] pointer-events-none" 
+        className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-gradient-to-br from-[#4A72FF]/8 to-[#7B59FF]/8 rounded-full blur-[130px] pointer-events-none"
       />
-      <motion.div 
+      <motion.div
         animate={{
           x: [0, -55, 35, 0],
           y: [0, 45, -35, 0],
@@ -105,9 +131,9 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute bottom-[-15%] right-[-10%] w-[700px] h-[700px] bg-gradient-to-tr from-[#BD43FF]/6 to-blue-500/6 rounded-full blur-[150px] pointer-events-none" 
+        className="absolute bottom-[-15%] right-[-10%] w-[700px] h-[700px] bg-gradient-to-tr from-[#BD43FF]/6 to-blue-500/6 rounded-full blur-[150px] pointer-events-none"
       />
-      <motion.div 
+      <motion.div
         animate={{
           x: [0, 35, -45, 0],
           y: [0, -45, 35, 0],
@@ -118,11 +144,11 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute top-[30%] left-[40%] w-[500px] h-[500px] bg-gradient-to-r from-[#4A72FF]/4 to-[#BD43FF]/4 rounded-full blur-[140px] pointer-events-none" 
+        className="absolute top-[30%] left-[40%] w-[500px] h-[500px] bg-gradient-to-r from-[#4A72FF]/4 to-[#BD43FF]/4 rounded-full blur-[140px] pointer-events-none"
       />
 
       {/* Soft spotlight behind the showcase card for extra depth */}
-      <motion.div 
+      <motion.div
         animate={{
           scale: [1, 1.12, 1],
           opacity: [0.6, 0.9, 0.6],
@@ -132,21 +158,21 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute right-[5%] top-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-[#7B59FF]/4 blur-[130px] rounded-full pointer-events-none hidden lg:block" 
+        className="absolute right-[5%] top-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-[#7B59FF]/4 blur-[130px] rounded-full pointer-events-none hidden lg:block"
       />
 
       <div className="w-full mx-auto max-w-7xl container-px grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center h-full relative z-10">
-        
+
         {/* Left Column - Content */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left w-full max-w-xl xl:max-w-2xl pt-6 lg:pt-0">
           {/* Eyebrow Pill Badge */}
           <div className="inline-flex items-center gap-2.5 px-4 py-1.5 text-[9px] sm:text-[10px] uppercase tracking-[0.25em] rounded-full border border-white/10 bg-white/5 text-white/90 font-bold mb-6 shadow-sm backdrop-blur-sm">
-            <Sparkles size={11} className="text-white/80 animate-pulse" /> 
+            <Sparkles size={11} className="text-white/80 animate-pulse" />
             {settings?.layout1_badge || 'PREMIUM STUDIO STANDARD'}
           </div>
 
           {/* Heading */}
-          <h1 
+          <h1
             className="text-[2.5rem] sm:text-5xl md:text-5xl lg:text-[3.25rem] xl:text-[4rem] 2xl:text-[4.75rem] font-black leading-[1.05] tracking-tight text-white mb-6"
             dangerouslySetInnerHTML={{ __html: settings?.layout1_heading || 'Premium<br />branding<br /><span class="bg-gradient-to-r from-[#4A72FF] via-[#7B59FF] to-[#BD43FF] bg-clip-text text-transparent">& print</span>' }}
           />
@@ -159,7 +185,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center md:justify-start mb-12 lg:mb-16">
             <Link to={settings?.layout1_button_link || "/contact"} className="w-full sm:w-auto group relative px-8 py-4 rounded-full bg-gradient-to-r from-[#4A72FF] to-[#8C4BFF] hover:from-[#3b63f0] hover:to-[#7c3aeb] text-white font-bold hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 text-sm sm:text-base shadow-lg shadow-blue-500/10">
-              {settings?.layout1_button_text || 'Start Your Project'} 
+              {settings?.layout1_button_text || 'Start Your Project'}
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link to="/portfolio" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-white/10 text-white hover:bg-white/5 hover:scale-105 active:scale-95 transition-all font-bold text-sm sm:text-base backdrop-blur-sm">
@@ -173,16 +199,16 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
               <span className="text-xl sm:text-2xl lg:text-2xl xl:text-[1.625rem] font-black text-white leading-none tracking-tight">12+</span>
               <span className="text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold mt-1.5">YEARS EXPERIENCE</span>
             </div>
-            
+
             <div className="h-10 w-px bg-white/10" />
-            
+
             <div className="flex flex-col">
               <span className="text-xl sm:text-2xl lg:text-2xl xl:text-[1.625rem] font-black text-white leading-none tracking-tight">500+</span>
               <span className="text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold mt-1.5">PREMIUM BRANDS</span>
             </div>
-            
+
             <div className="h-10 w-px bg-white/10" />
-            
+
             <div className="flex flex-col">
               <span className="text-xl sm:text-2xl lg:text-2xl xl:text-[1.625rem] font-black text-white leading-none tracking-tight">100%</span>
               <span className="text-[9px] uppercase tracking-[0.2em] text-white/40 font-bold mt-1.5">QUALITY PROMISE</span>
@@ -201,8 +227,8 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
               transition={{ duration: 0.8, ease: "easeInOut" }}
               className="absolute inset-0"
             >
-              <img 
-                src={activeSlides[currentSlide]}
+              <img
+                src={activeSlides[currentSlide]?.url}
                 alt="Wings Graphics Featured Showcase"
                 className="w-full h-full object-cover filter brightness-[0.95]"
               />
@@ -219,22 +245,23 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
                 <button
                   key={i}
                   onClick={() => setCurrentSlide(i)}
-                  className={`w-1.5 rounded-full transition-all duration-300 ${
-                    i === currentSlide ? 'h-7 bg-white' : 'h-2 bg-white/30 hover:bg-white/60'
-                  }`}
+                  className={`w-1.5 rounded-full transition-all duration-300 ${i === currentSlide ? 'h-7 bg-white' : 'h-2 bg-white/30 hover:bg-white/60'
+                    }`}
                   aria-label={`Go to slide ${i + 1}`}
                 />
               ))}
             </div>
           )}
 
-          {/* Showcase Details Overlay at bottom */}
-          <div className="absolute bottom-10 left-10 right-10 z-20 pointer-events-none">
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full border border-white/20 bg-black/30 backdrop-blur-md mb-4 shadow-sm">
-              <span className="text-[9px] uppercase tracking-[0.25em] text-white font-bold">FEATURED WORK</span>
+          {/* Showcase Details Overlay at bottom-right, clean and compact */}
+          <div className="absolute bottom-8 left-8 right-8 z-20 pointer-events-none flex flex-col items-end text-right">
+            <div className="inline-flex items-center px-3 py-1 rounded-full border border-white/10 bg-black/40 backdrop-blur-md mb-2.5 shadow-sm">
+              <span className="text-[8px] uppercase tracking-[0.2em] text-white/90 font-bold">
+                {activeSlides[currentSlide]?.badge || 'FEATURED WORK'}
+              </span>
             </div>
-            <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight drop-shadow-md">
-              Elevating global brands
+            <h3 className="text-xs sm:text-sm font-bold text-white/90 tracking-tight drop-shadow-sm">
+              {activeSlides[currentSlide]?.title || 'Elevating global brands'}
             </h3>
           </div>
         </div>
@@ -242,7 +269,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
       </div>
 
       {/* Animated Scroll Indicator (Centered at Bottom) */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: [0.4, 1, 0.4], y: [0, 6, 0] }}
         transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
@@ -250,7 +277,7 @@ export function HeroLayout1({ settings }: { settings?: VisibilitySettings }) {
         onClick={() => window.scrollTo({ top: window.innerHeight, behavior: "smooth" })}
       >
         <div className="w-5 h-8 rounded-full border border-white/20 flex justify-center pt-1.5">
-          <motion.div 
+          <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
             className="w-1 h-1 rounded-full bg-white/60"

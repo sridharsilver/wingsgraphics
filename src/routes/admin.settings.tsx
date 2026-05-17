@@ -35,7 +35,9 @@ import {
   Link2,
   Monitor,
   Layers,
-  LayoutGrid
+  LayoutGrid,
+  ChevronUp,
+  ChevronDown
 } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Switch } from '@/components/ui/switch'
@@ -154,7 +156,7 @@ function HeroImageManager({ layout }: { layout: 'layout1' | 'layout2' | 'layout3
   const isMultiple = layout === 'layout1' || layout === 'layout2';
   const settingKey = isMultiple ? `hero_slider_${layout}` : `hero_image_${layout}`;
 
-  const [slides, setSlides] = useState<string[]>([]);
+  const [slides, setSlides] = useState<any[]>([]);
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -171,8 +173,29 @@ function HeroImageManager({ layout }: { layout: 'layout1' | 'layout2' | 'layout3
         .eq('key', settingKey)
         .maybeSingle();
 
-      if (data?.value) {
-        setSlides(data.value as string[]);
+      if (data?.value && Array.isArray(data.value)) {
+        if (layout === 'layout1') {
+          const parsed = data.value.map((item, index) => {
+            if (typeof item === 'string') {
+              return {
+                url: item,
+                title: index === 0 ? "Elevating global brands" : "Premium Showcase Work",
+                badge: "FEATURED WORK"
+              };
+            }
+            return {
+              url: item.url || '',
+              title: item.title || 'Premium Showcase Work',
+              badge: item.badge || 'FEATURED WORK'
+            };
+          });
+          setSlides(parsed);
+        } else {
+          const parsed = data.value.map(item => typeof item === 'string' ? item : (item.url || ''));
+          setSlides(parsed);
+        }
+      } else {
+        setSlides([]);
       }
     } catch (err) {
       console.error(err);
@@ -181,7 +204,7 @@ function HeroImageManager({ layout }: { layout: 'layout1' | 'layout2' | 'layout3
     }
   }
 
-  async function saveSlides(newSlides: string[]) {
+  async function saveSlides(newSlides: any[]) {
     const { error } = await supabase
       .from('site_settings')
       .upsert({ 
@@ -194,6 +217,75 @@ function HeroImageManager({ layout }: { layout: 'layout1' | 'layout2' | 'layout3
       toast.error("Failed to save slider settings");
     } else {
       setSlides(newSlides);
+    }
+  }
+
+  async function handleMove(index: number, direction: 'up' | 'down') {
+    const newIndex = direction === 'up' ? index - 1 : index + 1;
+    if (newIndex < 0 || newIndex >= slides.length) return;
+
+    const updated = [...slides];
+    const temp = updated[index];
+    updated[index] = updated[newIndex];
+    updated[newIndex] = temp;
+
+    setSlides(updated);
+    await saveSlides(updated);
+    toast.success("Slide order updated");
+  }
+
+  async function handleFieldChange(index: number, field: 'title' | 'badge', value: string) {
+    const updated = slides.map((slide, i) => {
+      if (i === index) {
+        return { ...slide, [field]: value };
+      }
+      return slide;
+    });
+    setSlides(updated);
+    await saveSlides(updated);
+  }
+
+  const [replacingIndex, setReplacingIndex] = useState<number | null>(null);
+
+  async function handleReplaceImage(index: number, e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    setReplacingIndex(index);
+    try {
+      const fileExt = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+      const fileName = `hero-${Date.now()}.${fileExt}`;
+      const filePath = `hero/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("images")
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from("images")
+        .getPublicUrl(filePath);
+
+      const updated = slides.map((slide, i) => {
+        if (i === index) {
+          if (layout === 'layout1') {
+            return { ...slide, url: publicUrl };
+          } else {
+            return publicUrl;
+          }
+        }
+        return slide;
+      });
+
+      await saveSlides(updated);
+      toast.success("Image replaced successfully");
+    } catch (err: any) {
+      toast.error(err.message || "Upload failed");
+    } finally {
+      setUploading(false);
+      setReplacingIndex(null);
     }
   }
 
@@ -217,7 +309,14 @@ function HeroImageManager({ layout }: { layout: 'layout1' | 'layout2' | 'layout3
         .from("images")
         .getPublicUrl(filePath);
 
-      const newSlides = isMultiple ? [...slides, publicUrl] : [publicUrl];
+      let newSlides: any[] = [];
+      if (layout === 'layout1') {
+        const newItem = { url: publicUrl, title: 'Premium Showcase Work', badge: 'FEATURED WORK' };
+        newSlides = [...slides, newItem];
+      } else {
+        newSlides = isMultiple ? [...slides, publicUrl] : [publicUrl];
+      }
+
       await saveSlides(newSlides);
       toast.success("Slide added successfully");
     } catch (err: any) {
@@ -247,45 +346,202 @@ function HeroImageManager({ layout }: { layout: 'layout1' | 'layout2' | 'layout3
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {slides.map((url, i) => (
-            <div key={url} className="group relative aspect-video rounded-xl overflow-hidden border border-white/5 bg-white/5 shadow-md">
-              <img 
-                src={url} 
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 filter brightness-95 group-hover:brightness-90" 
-                alt="Wings Graphics Slide" 
-              />
-              {/* Corner Float Delete Button */}
-              <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-1 group-hover:translate-y-0 z-10">
-                <Button 
-                  variant="destructive" 
-                  size="icon" 
-                  onClick={() => handleDelete(i)} 
-                  className="rounded-xl size-8 bg-red-500/80 hover:bg-red-600 backdrop-blur-md border border-red-500/20 active:scale-95 shadow-lg"
-                >
-                  <Trash2 size={14} />
-                </Button>
-              </div>
+        {layout === 'layout1' ? (
+          // Advanced Metadata and Image Editor for Layout 1
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 gap-6">
+              {slides.map((slide, i) => (
+                <div key={i} className="flex flex-col md:flex-row gap-4 p-4 rounded-xl border border-white/5 bg-white/5 shadow-md items-start">
+                  {/* Slide Thumbnail Preview on Left */}
+                  <div className="relative w-full md:w-48 aspect-video rounded-lg overflow-hidden border border-white/10 bg-white/5 flex-shrink-0 group">
+                    <img 
+                      src={slide.url} 
+                      className="w-full h-full object-contain filter brightness-95 bg-black/40" 
+                      alt="Slide Preview" 
+                    />
+                    {/* Reorder and Delete Buttons Overlay */}
+                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex gap-1">
+                      {isMultiple && slides.length > 1 && (
+                        <>
+                          <Button 
+                            variant="secondary" 
+                            size="icon" 
+                            onClick={() => handleMove(i, 'up')} 
+                            disabled={i === 0}
+                            className="rounded-lg size-8 bg-black/60 hover:bg-black/80 text-white border border-white/10 active:scale-95 shadow-md disabled:opacity-30 backdrop-blur-md"
+                            title="Move Up"
+                          >
+                            <ChevronUp size={14} />
+                          </Button>
+                          <Button 
+                            variant="secondary" 
+                            size="icon" 
+                            onClick={() => handleMove(i, 'down')} 
+                            disabled={i === slides.length - 1}
+                            className="rounded-lg size-8 bg-black/60 hover:bg-black/80 text-white border border-white/10 active:scale-95 shadow-md disabled:opacity-30 backdrop-blur-md"
+                            title="Move Down"
+                          >
+                            <ChevronDown size={14} />
+                          </Button>
+                        </>
+                      )}
+                      <Button 
+                        variant="destructive" 
+                        size="icon" 
+                        onClick={() => handleDelete(i)} 
+                        className="rounded-lg size-8 bg-red-500/80 hover:bg-red-600 backdrop-blur-md active:scale-95 shadow-md border border-red-500/10"
+                        title="Delete"
+                      >
+                        <Trash2 size={14} />
+                      </Button>
+                    </div>
+
+                    {/* Change Image Hover Overlay */}
+                    <label className="absolute bottom-2 left-2 right-2 h-7 rounded-md bg-black/60 hover:bg-black/80 border border-white/10 active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1.5 backdrop-blur-md opacity-0 group-hover:opacity-100 duration-300">
+                      <input 
+                        type="file" 
+                        className="hidden" 
+                        accept="image/*" 
+                        onChange={(e) => handleReplaceImage(i, e)} 
+                        disabled={uploading}
+                      />
+                      {uploading && replacingIndex === i ? (
+                        <Loader2 className="animate-spin text-white size-3" />
+                      ) : (
+                        <>
+                          <Upload size={10} className="text-white" />
+                          <span className="text-[9px] font-bold text-white uppercase tracking-wider">Change Image</span>
+                        </>
+                      )}
+                    </label>
+                  </div>
+
+                  {/* Dynamic Slide Metadata Fields on Right */}
+                  <div className="flex-grow w-full space-y-3">
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Badge Tag</label>
+                      <Input 
+                        value={slide.badge || ''}
+                        onChange={(e) => handleFieldChange(i, 'badge', e.target.value)}
+                        placeholder="e.g. FEATURED WORK"
+                        className="bg-white/5 border-white/10 text-white rounded-lg focus:border-primary focus:ring-1 focus:ring-primary h-9 text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Title Caption</label>
+                      <Input 
+                        value={slide.title || ''}
+                        onChange={(e) => handleFieldChange(i, 'title', e.target.value)}
+                        placeholder="e.g. Elevating global brands"
+                        className="bg-white/5 border-white/10 text-white rounded-lg focus:border-primary focus:ring-1 focus:ring-primary h-9 text-xs"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-          {(!slides.length || isMultiple) && (
-            <label className="aspect-video rounded-xl border border-dashed border-primary/20 hover:border-primary bg-primary/5 hover:bg-primary/10 transition-all duration-300 cursor-pointer flex flex-col items-center justify-center gap-2 group shadow-inner">
+
+            {/* Slide Uploader */}
+            <label className="w-full h-12 rounded-xl border border-dashed border-primary/20 hover:border-primary bg-primary/5 hover:bg-primary/10 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 group shadow-sm mt-4">
               <input type="file" className="hidden" accept="image/*" onChange={handleUpload} disabled={uploading} />
-              {uploading ? (
+              {uploading && replacingIndex === null ? (
                 <Loader2 className="animate-spin text-primary size-5" />
               ) : (
                 <>
-                  <div className="size-10 rounded-full bg-primary/10 text-primary flex items-center justify-center group-hover:scale-105 group-hover:bg-primary/20 transition-all duration-300">
-                    <Plus size={18} />
-                  </div>
+                  <Plus size={16} className="text-primary group-hover:scale-110 transition-transform" />
                   <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest group-hover:text-primary transition-colors">
-                    {isMultiple ? 'Add Slide' : 'Upload Image'}
+                    Add New Showcase Slide
                   </span>
                 </>
               )}
             </label>
-          )}
-        </div>
+          </div>
+        ) : (
+          // Legacy standard grid editor for Layout 2 / Layout 3 with Replace Image
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {slides.map((url, i) => (
+              <div key={url} className="group relative aspect-video rounded-xl overflow-hidden border border-white/5 bg-white/5 shadow-md">
+                <img 
+                  src={url} 
+                  className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 filter brightness-95 group-hover:brightness-90 bg-black/40" 
+                  alt="Wings Graphics Slide" 
+                />
+                {/* Reorder and Delete Group */}
+                <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-1 group-hover:translate-y-0 z-10 flex gap-1.5">
+                  {isMultiple && slides.length > 1 && (
+                    <>
+                      <Button 
+                        variant="secondary" 
+                        size="icon" 
+                        onClick={() => handleMove(i, 'up')} 
+                        disabled={i === 0}
+                        className="rounded-xl size-8 bg-black/60 hover:bg-black/80 text-white border border-white/10 active:scale-95 shadow-lg disabled:opacity-30 backdrop-blur-md"
+                        title="Move Up"
+                      >
+                        <ChevronUp size={14} />
+                      </Button>
+                      <Button 
+                        variant="secondary" 
+                        size="icon" 
+                        onClick={() => handleMove(i, 'down')} 
+                        disabled={i === slides.length - 1}
+                        className="rounded-xl size-8 bg-black/60 hover:bg-black/80 text-white border border-white/10 active:scale-95 shadow-lg disabled:opacity-30 backdrop-blur-md"
+                        title="Move Down"
+                      >
+                        <ChevronDown size={14} />
+                      </Button>
+                    </>
+                  )}
+                  <Button 
+                    variant="destructive" 
+                    size="icon" 
+                    onClick={() => handleDelete(i)} 
+                    className="rounded-xl size-8 bg-red-500/80 hover:bg-red-600 backdrop-blur-md border border-red-500/20 active:scale-95 shadow-lg"
+                    title="Delete"
+                  >
+                    <Trash2 size={14} />
+                  </Button>
+                </div>
+
+                {/* Change Image Hover Overlay */}
+                <label className="absolute bottom-3 left-3 right-3 h-8 rounded-lg bg-black/60 hover:bg-black/80 border border-white/10 active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1.5 backdrop-blur-md opacity-0 group-hover:opacity-100 duration-300">
+                  <input 
+                    type="file" 
+                    className="hidden" 
+                    accept="image/*" 
+                    onChange={(e) => handleReplaceImage(i, e)} 
+                    disabled={uploading}
+                  />
+                  {uploading && replacingIndex === i ? (
+                    <Loader2 className="animate-spin text-white size-3.5" />
+                  ) : (
+                    <>
+                      <Upload size={12} className="text-white" />
+                      <span className="text-[10px] font-bold text-white uppercase tracking-wider">Change Image</span>
+                    </>
+                  )}
+                </label>
+              </div>
+            ))}
+            {(!slides.length || isMultiple) && (
+              <label className="aspect-video rounded-xl border border-dashed border-primary/20 hover:border-primary bg-primary/5 hover:bg-primary/10 transition-all duration-300 cursor-pointer flex flex-col items-center justify-center gap-2 group shadow-inner">
+                <input type="file" className="hidden" accept="image/*" onChange={handleUpload} disabled={uploading} />
+                {uploading && replacingIndex === null ? (
+                  <Loader2 className="animate-spin text-primary size-5" />
+                ) : (
+                  <>
+                    <div className="size-10 rounded-full bg-primary/10 text-primary flex items-center justify-center group-hover:scale-105 group-hover:bg-primary/20 transition-all duration-300">
+                      <Plus size={18} />
+                    </div>
+                    <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest group-hover:text-primary transition-colors">
+                      {isMultiple ? 'Add Slide' : 'Upload Image'}
+                    </span>
+                  </>
+                )}
+              </label>
+            )}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

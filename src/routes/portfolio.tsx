@@ -54,16 +54,22 @@ function PortfolioPage() {
         desc="A curated look at projects across print, brand and digital."
       />
       <Section>
-        <div className="mt-10 flex flex-wrap gap-2">
-          {categories.map((c) => (
-            <button
-              key={c}
-              onClick={() => setFilter(c)}
-              className={`px-4 py-2 text-sm rounded-full transition ${filter === c ? "bg-gradient-brand text-brand-foreground shadow-glow" : "glass hover:bg-white/10"}`}
-            >
-              {c}
-            </button>
-          ))}
+        <div className="mt-2 relative overflow-hidden -mx-5 px-5 md:mx-0 md:px-0">
+          <div className="flex md:flex-wrap items-center gap-2 overflow-x-auto no-scrollbar pb-3 md:pb-0 scroll-smooth snap-x snap-mandatory [mask-image:linear-gradient(to_right,transparent,white_20px,white_calc(100%-20px),transparent)] md:[mask-image:none] [-webkit-mask-image:linear-gradient(to_right,transparent,white_20px,white_calc(100%-20px),transparent)] md:[-webkit-mask-image:none]">
+            {categories.map((c) => (
+              <button
+                key={c}
+                onClick={() => setFilter(c)}
+                className={`px-4 py-2 text-sm rounded-full transition-all shrink-0 snap-start ${
+                  filter === c 
+                    ? "bg-gradient-brand text-brand-foreground shadow-glow scale-[1.02]" 
+                    : "glass hover:bg-white/10 text-muted-foreground hover:text-white"
+                }`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
         </div>
 
         <motion.div layout className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-[220px]">
@@ -126,9 +132,18 @@ function PortfolioPage() {
                 onClick={(e) => e.stopPropagation()}
                 className="w-full max-w-3xl rounded-3xl glass shadow-elegant overflow-hidden max-h-[90vh] overflow-y-auto"
               >
-                <div className="aspect-[16/9] relative overflow-hidden">
-                  <img src={open.image_url} alt={open.title} className="absolute inset-0 w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-40" />
+                <div className="relative overflow-hidden bg-black/40 flex items-center justify-center min-h-[300px] max-h-[60vh]">
+                  {/* Premium blurred backdrop glow */}
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center blur-2xl opacity-20 scale-110 pointer-events-none" 
+                    style={{ backgroundImage: `url(${open.image_url})` }}
+                  />
+                  <img 
+                    src={open.image_url} 
+                    alt={open.title} 
+                    className="max-h-[60vh] w-auto max-w-full object-contain z-10 relative" 
+                  />
+                  <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/50 to-transparent pointer-events-none z-20" />
                 </div>
                 <div className="p-6 md:p-8">
                   <div className="flex items-start justify-between gap-4">
