@@ -85,7 +85,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Wings Graphics — Premium Printing, Branding & Web Design" },
       { name: "description", content: "Wings Graphics delivers commercial printing, graphic design, branding and modern web design for ambitious brands." },
       { name: "author", content: "Wings Graphics" },
-      { name: "theme-color", content: "#9b4dff" },
       { name: "robots", content: "index, follow" },
       { property: "og:site_name", content: "Wings Graphics" },
       { property: "og:type", content: "website" },
